@@ -18,14 +18,14 @@ class QuestionList extends Component {
           examId: examId
       })
 
-    fetch("http://10.0.0.138:8080/api/exam/"+examId+"/question")//is this an error in something you typed? no! Im accessing the widgets. Thats where the problem is, but
+    fetch("http://10.0.0.138:8080/api/exam/"+examId+"/question")
       .then(response => (response.json()))
       .then(questions => this.setState({questions: questions}))
   }
   render() {
     return(
       <View style={{padding: 15}}>
-      {this.state.questions.map((question) => (
+      {this.state.questions.map((question, index) => (
           <ListItem
             onPress={() => {
               if(question.type === "TrueFalse")
@@ -34,6 +34,12 @@ class QuestionList extends Component {
               if(question.type === "MultipleChoice")
                 this.props.navigation
                   .navigate("MultipleChoiceQuestionEditor", {questionId: question.id})
+              if(question.type === "Essay")
+                 this.props.navigation
+                   .navigate("EssayEditor", {questionId: question.id})
+              if(question.type === "FillInTheBlanks")
+                 this.props.navigation
+                   .navigate("FillInTheBlanksEditor", {questionId: question.id})
             }}
             key={index}
             subtitle={question.description}
