@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View, Alert, Picker} from 'react-native'
+import {View, Alert, Picker, StyleSheet, ScrollView} from 'react-native'
 import {Text, ListItem, ButtonGroup, Button} from 'react-native-elements'
 import ExamService from "../services/ExamService";
 
@@ -28,6 +28,7 @@ export default class Exam extends Component {
             ))
     }
     componentWillReceiveProps(){
+        console.log("lessonId:", this.state.lessonId)
         fetch("http://10.0.0.138:8080/api/lesson/" + this.state.lessonId + "/exam")
             .then(response => (response.json()))
             .then(widgets => (
@@ -42,28 +43,34 @@ export default class Exam extends Component {
     render() {
 
         return(
-            <View style={{padding: 15}}>
-                {this.state.widgets.map((widget, index) => (
-                    <ListItem
+            <ScrollView>
+                <View style={{padding: 15}}>
+                    {this.state.widgets.map((widget, index) => (
+                        <ListItem
+                            onPress={() => {
+                                {console.log("widgetId:",widget.id)}
+                                this.props.navigation.navigate("ExamWidget", {examId: widget.id})
+                            }}
+                            key={index}
+                            subtitle={widget.description}
+                            title={widget.title}/>))}
+                    <Button style={styles.buttons}
                         onPress={() => {
-                            {console.log("widgetId:",widget.id)}
-                            this.props.navigation.navigate("ExamWidget", {examId: widget.id})
+                            this.props.navigation.navigate("CreateNewExamWidget", {lessonId: this.state.lessonId})
                         }}
-                        key={index}
-                        subtitle={widget.description}
-                        title={widget.title}/>))}
-                <Button
-                    onPress={() => {
-                        this.props.navigation.navigate("CreateNewExamWidget", {lessonId: this.state.lessonId})
+                        title = "Create new Exam"/>
                     }}
-                    title = "Create new Exam"/>
-                }}
-            </View>
+                </View>
+            </ScrollView>
         )
     }
 }
 
-
+const styles = StyleSheet.create({
+    buttons:{
+        margin: 5
+    }
+});
 
 
 

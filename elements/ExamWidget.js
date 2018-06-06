@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View, Alert, Picker} from 'react-native'
+import {View, Alert, Picker, StyleSheet, ScrollView} from 'react-native'
 import {Text, ListItem, ButtonGroup, Button} from 'react-native-elements'
 
 export default class ExamWidget extends Component {
@@ -43,6 +43,7 @@ export default class ExamWidget extends Component {
 
 
         return(
+            <ScrollView>
             <View style={{padding: 15}}>
 
                 {this.state.questions.map((question, index) => (
@@ -84,20 +85,26 @@ export default class ExamWidget extends Component {
                         // this.temp();
                         if(this.state.questionType === "TrueFalse")
                             this.props.navigation
-                                .navigate("TrueFalseQuestionEditor",{questionId: this.state.examId})
+                                .navigate("TrueFalseQuestionEditor",{examId: this.state.examId})
                         if(this.state.questionType === "MultipleChoice")
                             this.props.navigation
-                                .navigate("MultipleChoiceQuestionEditor", {questionId: this.state.examId})
+                                .navigate("MultipleChoiceQuestionEditor", {examId: this.state.examId})
                         if(this.state.questionType === "Essay")
                             this.props.navigation
-                                .navigate("EssayEditor", {questionId: this.state.examId})
+                                .navigate("EssayEditor", {examId: this.state.examId})
                         if(this.state.questionType === "FillInTheBlanks")
                             this.props.navigation
-                                .navigate("FillInTheBlanksEditor", {questionId: this.state.examId})
+                                .navigate("FillInTheBlanksEditor", {examId: this.state.examId})
                     }}
                     title = "Create new Question"/>
                     }}
             </View>
+            </ScrollView>
         )
     }
 }
+const styles = StyleSheet.create({
+    buttons:{
+        margin: 5
+    }
+});

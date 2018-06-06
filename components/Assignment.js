@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, Alert} from 'react-native'
+import {View, Alert, StyleSheet} from 'react-native'
 import {Text, ListItem, Button} from 'react-native-elements'
 
 export default class Assignment extends React.Component {
@@ -59,10 +59,17 @@ export default class Assignment extends React.Component {
                     onPress={() => {
                         this.props.navigation.navigate("AssignmentWidget", {lessonId: this.state.lessonId})
                     }}
-                    title="Create new Assignment"/>
+                    title="Create new Assignment"
+                style={styles.buttons}/>
 
             </View>)
     }
 }
+
+const styles = StyleSheet.create({
+    buttons:{
+        margin: 5
+    }
+});
 
 

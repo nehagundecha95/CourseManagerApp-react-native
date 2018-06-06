@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, Alert} from 'react-native'
+import {View, Alert, StyleSheet} from 'react-native'
 import {Text, ListItem} from 'react-native-elements'
 
 class CourseList extends React.Component {
@@ -31,3 +31,4 @@ class CourseList extends React.Component {
   }
 }
 export default CourseList
+

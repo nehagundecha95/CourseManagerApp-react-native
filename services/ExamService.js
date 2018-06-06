@@ -31,13 +31,14 @@ export default class ExamService {
             return response.json();
         })
     }
-    createMultipleChoiceQuestion(title,description,points,options,questionId) {
+    createMultipleChoiceQuestion(title,description,points,options,correctOption,questionId) {
         return fetch('http://10.0.0.138:8080/api/exam/'+questionId +'/choice', {
             body: JSON.stringify({
                 title: title,
                 description: description,
                 points: points,
                 options: options,
+                correctOption: correctOption
             }),
             headers: {
                 'Content-Type': 'application/json'
@@ -48,6 +49,28 @@ export default class ExamService {
             return response.json();
         })
     }
+
+
+    createFillInTheBlanksQuestion(title,description,points,variables,questionId) {
+        return fetch('http://10.0.0.138:8080/api/exam/'+questionId +'/blanks', {
+            body: JSON.stringify({
+                title: title,
+                description: description,
+                points: points,
+                variables: variables,
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST'
+        }).then(function (response) {
+            console.log("response:", response)
+            return response.json();
+        })
+    }
+
+
+
     createEssayQuestion(title,description,points,questionId) {
         return fetch('http://10.0.0.138:8080/api/exam/'+questionId +'/essay', {
             body: JSON.stringify({

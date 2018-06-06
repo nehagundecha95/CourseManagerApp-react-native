@@ -37,12 +37,21 @@ class Home extends React.Component {
         return(
             <ScrollView>
                 {/*<AssignmentWidget navigation={this.props.navigation}/>*/}
+
+
+
+                {/*<FillInTheBlanksEditor/>*/}
                 <StatusBar barStyle="light-content"/>
                 <FixedHeader/>
 
-                <Button title="Courses"
+                <Button style={styles.buttons} title="Courses"
                         onPress={() => this.props.navigation
                             .navigate('CourseList') } />
+
+
+
+
+
                 {/*<Button title="Go to Screen X"*/}
                         {/*onPress={() => this.props.navigation*/}
                             {/*.navigate('ScreenX') } />*/}
@@ -122,7 +131,11 @@ const App = createStackNavigator({
 
 export default App;
 
-
+const styles = StyleSheet.create({
+    buttons:{
+        margin: 5
+    }
+});
 //
 // const styles = StyleSheet.create({
 //   container: {

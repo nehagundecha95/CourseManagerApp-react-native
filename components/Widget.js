@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View, Alert, Picker} from 'react-native'
+import {View, Alert, Picker, StyleSheet} from 'react-native'
 import {Text, ListItem, Button} from 'react-native-elements'
 // import WidgetTypePicker from "../elements/WidgetTypePicker";
 
@@ -22,13 +22,14 @@ export default class Widget extends Component {
 
     render() {
         return(
-            <View style={{padding: 15}}>
-                <Button
+            <View style={{padding: 15,
+                margin: 10}}>
+                <Button style={styles.buttons}
                     onPress={() => {
                         this.props.navigation.navigate("Assignment", {lessonId: this.state.lessonId})
                     }}
                     title="Assignment"/>))}
-                <Button
+                <Button style={styles.buttons}
                     onPress={() => {
                          this.props.navigation.navigate("Exam", {lessonId: this.state.lessonId})
                     }}
@@ -36,3 +37,9 @@ export default class Widget extends Component {
             </View>)
 
     }}
+
+const styles = StyleSheet.create({
+    buttons:{
+        margin: 5
+    }
+});

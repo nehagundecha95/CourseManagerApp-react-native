@@ -19,14 +19,14 @@ export default class CreateNewExamWidget extends React.Component {
     }
     componentDidMount() {
         // const {navigation} = this.props;
-        const lessonId = this.props.navigation.getParam("lessonId")
+        const lessonId = this.props.navigation.getParam("lessonId", 1)
         this.setState({
             lessonId: lessonId
         })
     }
 
     updateForm(newState) {
-        console.log(newState)
+        // console.log(newState)
         this.setState(newState)
 
     }
@@ -54,13 +54,13 @@ export default class CreateNewExamWidget extends React.Component {
                         Description is required
                     </FormValidationMessage>
 
-                    <Button	backgroundColor="green"
+                    <Button style={styles.buttons}	backgroundColor="green"
                                color="white"
                                title="Save"
-                               onPress={()=>{this.createNewExam();
-                               this.props.navigation.navigate("Exam",{lessonId:this.state.lessonId})}}
+                               onPress={()=>{this.createNewExam()
+                               this.props.navigation.navigate("Exam", {lessonId: this.state.lessonId})}}
                     />
-                    <Button	backgroundColor="red"
+                    <Button	 style={styles.buttons} backgroundColor="red"
                                color="white"
                                title="Cancel"/>
                 </View>
@@ -77,5 +77,9 @@ const styles = StyleSheet.create({
         // alignItems: 'center',
         // justifyContent: 'center',
     },
+    buttons:{
+        margin: 5
+    }
 });
+
 

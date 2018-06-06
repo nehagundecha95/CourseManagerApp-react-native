@@ -4,6 +4,7 @@ import {Text, Button} from 'react-native-elements'
 import {FormLabel, FormInput, FormValidationMessage} from 'react-native-elements'
 import AssignmentService from '../services/AssignmentService'
 
+var assignmentId = 0
 export default class AssignmentWidget extends React.Component {
     static navigationOptions = { title: "Create new Assignment"}
     constructor(props) {
@@ -14,16 +15,28 @@ export default class AssignmentWidget extends React.Component {
             description: '',
             points: '',
             widgets: [],
-            assignmentId: ''
+            assignmentId: '',
+            hiddenUpdateBtn: false
+
+
         }
         if(this.props.navigation.getParam("assignmentId")!==undefined){
-            const assignmentId = this.props.navigation.getParam("assignmentId");
+            assignmentId = this.props.navigation.getParam("assignmentId");
+            // this.setState({assignmentId: assignmentId});
+            // this.setState({hiddenUpdateBtn: false});
             fetch("http://10.0.0.138:8080/api/assignment/" + assignmentId)
                 .then(response => (response.json()))
-                .then(assignment => {this.setState({title:assignment.title})
+                .then(assignment => {
+                    this.setState({hiddenUpdateBtn: true})
+                    this.setState({title: assignment.title})
                 this.setState({description: assignment.description})
-                this.setState({points: assignment.points})})
+                this.setState({points: assignment.points})
+                    })
         }
+        // else{
+        //     this.setState({hiddenUpdateBtn: true});
+        //
+        // }
         this.AssignmentService = AssignmentService.instance;
         // this.setAssignment = this.setAssignment.bind(this);
     }
@@ -33,16 +46,20 @@ export default class AssignmentWidget extends React.Component {
         this.setState({
             lessonId: lessonId
         })
+        this.setState({assignmentId: assignmentId})
     }
 
     updateForm(newState) {
-        console.log(newState)
+        // console.log(newState)
         this.setState(newState)
-
     }
 
     createNewAssignment(){
         this.AssignmentService.createAssignment(this.state.title,this.state.description,this.state.points, this.state.lessonId);
+    }
+    updateAssignment(){
+        // console.log("in update assignment client")
+        this.AssignmentService.updateAssignment(this.state.title,this.state.description,this.state.points, this.state.assignmentId);
     }
 
     render() {
@@ -73,35 +90,46 @@ export default class AssignmentWidget extends React.Component {
                     Points is required
                 </FormValidationMessage>
 
-                <Button	backgroundColor="green"
+                <Button	style={styles.buttons} backgroundColor="green"
                            color="white"
                            title="Save"
                            onPress={()=>{this.createNewAssignment();
                                this.props.navigation.navigate("Assignment",{lessonId:this.state.lessonId})}}
                 />
-                <Button	backgroundColor="red"
+                    {this.state.hiddenUpdateBtn &&
+                        <Button style={styles.buttons} backgroundColor="blue"
+                                color="white"
+                                title="Edit"
+                                onPress={() => {
+                                    this.updateAssignment();
+                                    this.props.navigation.navigate("Assignment", {lessonId: this.state.lessonId})
+                                }}/>
+                    }
+
+                <Button	 style={styles.buttons} backgroundColor="red"
                            color="white"
-                           title="Cancel"/>
+                           title="Cancel"
+                           onPress={()=>{this.props.navigation.navigate("Assignment",{lessonId:this.state.lessonId})}}/>
 
-            <View style={{padding: 15}}>
-                <Text h3>Preview</Text>
-                <Text h2>{this.state.title}</Text>
-                <Text style={{textAlign: 'right'}} h3>{this.state.points} pts</Text>
+                    <Text style={styles.previewHeader} h4>Preview</Text>
+            <View style={styles.previewSection}>
+
+                <Text h4>{this.state.title}</Text>
+                <Text style={{textAlign: 'right'}} h4>{this.state.points} pts</Text>
                 <Text>{this.state.description}</Text>
-                <Text h3>Essay answer</Text>
-                <TextInput style={{borderWidth: 1, height: 100, backgroundColor: 'white'}}
-
+                <Text h4>Essay answer</Text>
+                <TextInput style={styles.textInputEssayAns}
                     editable = {true}
                     maxLength = {40}
                 />
-                <Text h3>Upload a file</Text>
-                <TextInput style={{borderWidth: 1, height: 50, backgroundColor: 'white'}}
+                <Text h4>Upload a file</Text>
+                <TextInput style={styles.textInput}
 
                            editable = {true}
                            maxLength = {40}
                 />
-                <Text h3>Submit a link</Text>
-                <TextInput style={{borderWidth: 1, height: 50, backgroundColor: 'white'}}
+                <Text h4>Submit a link</Text>
+                <TextInput style={styles.textInput}
 
                            editable = {true}
                            maxLength = {40}
@@ -115,6 +143,27 @@ export default class AssignmentWidget extends React.Component {
 }
 
 const styles = StyleSheet.create({
+    previewSection:{
+        padding: 15,
+        borderWidth: 1,
+        margin: 5
+
+    },
+    previewHeader: {
+        marginTop: 20,
+        margin: 5
+    },
+    textInputEssayAns: {
+      margin: 5,
+        borderWidth: 1, height: 100, backgroundColor: 'white'
+    },
+    textInput: {
+        margin: 5,
+        borderWidth: 1, height: 50, backgroundColor: 'white'
+    },
+    buttons:{
+        margin: 5
+    },
   container: {
     // flex: 1,
     backgroundColor: '#fff',
