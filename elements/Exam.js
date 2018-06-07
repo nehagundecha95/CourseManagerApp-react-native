@@ -28,13 +28,13 @@ export default class Exam extends Component {
             ))
     }
     componentWillReceiveProps(){
-        console.log("lessonId:", this.state.lessonId)
+        console.log("lessonId in exam after receving props:", this.state.lessonId)
         fetch("http://10.0.0.138:8080/api/lesson/" + this.state.lessonId + "/exam")
             .then(response => (response.json()))
-            .then(widgets => (
-                // console.log("here:", widgets);
+            .then(widgets => {
+                console.log("here:", widgets);
                 this.setState({widgets: widgets})
-            ))
+            })
     }
 
     createNewExam(){
@@ -49,7 +49,7 @@ export default class Exam extends Component {
                         <ListItem
                             onPress={() => {
                                 {console.log("widgetId:",widget.id)}
-                                this.props.navigation.navigate("ExamWidget", {examId: widget.id})
+                                this.props.navigation.navigate("ExamWidget", {lessonId: this.state.lessonId, examId: widget.id})
                             }}
                             key={index}
                             subtitle={widget.description}

@@ -39,8 +39,6 @@ class Home extends React.Component {
                 {/*<AssignmentWidget navigation={this.props.navigation}/>*/}
 
 
-
-                {/*<FillInTheBlanksEditor/>*/}
                 <StatusBar barStyle="light-content"/>
                 <FixedHeader/>
 
@@ -133,7 +131,8 @@ export default App;
 
 const styles = StyleSheet.create({
     buttons:{
-        margin: 5
+        margin: 5,
+        borderRadius: 5
     }
 });
 //

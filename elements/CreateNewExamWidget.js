@@ -13,8 +13,24 @@ export default class CreateNewExamWidget extends React.Component {
             title: '',
             description: '',
             points: '',
+            hiddenUpdateBtn: false,
+            examId: '',
+            hiddenSaveBtn: true
         }
         this.ExamService = ExamService.instance;
+        if(this.props.navigation.getParam("examId")!==undefined){
+            const examId = this.props.navigation.getParam("examId");
+            fetch("http://10.0.0.138:8080/api/exam/"+examId)
+                .then(response => (response.json()))
+                .then(exam => {
+                    this.setState({hiddenUpdateBtn: true});
+                    this.setState({title: exam.title});
+                    this.setState({description: exam.description});
+                    this.setState({examId: examId})
+                    this.setState({hiddenSaveBtn: false})
+                })
+        }
+
 
     }
     componentDidMount() {
@@ -23,6 +39,11 @@ export default class CreateNewExamWidget extends React.Component {
         this.setState({
             lessonId: lessonId
         })
+        const examId = this.props.navigation.getParam("examId", 1)
+        this.setState({
+            examId: examId
+        })
+
     }
 
     updateForm(newState) {
@@ -30,6 +51,15 @@ export default class CreateNewExamWidget extends React.Component {
         this.setState(newState)
 
     }
+
+    updateExam(){
+        console.log("update exam");
+        this.ExamService.updateExam(
+            this.state.title,
+            this.state.description,
+            this.state.examId);
+    }
+
 
     createNewExam(){
         this.ExamService.createExam(this.state.title, this.state.description, this.state.lessonId);
@@ -54,15 +84,35 @@ export default class CreateNewExamWidget extends React.Component {
                         Description is required
                     </FormValidationMessage>
 
-                    <Button style={styles.buttons}	backgroundColor="green"
-                               color="white"
-                               title="Save"
-                               onPress={()=>{this.createNewExam()
-                               this.props.navigation.navigate("Exam", {lessonId: this.state.lessonId})}}
+                    {this.state.hiddenSaveBtn &&
+                    <Button style={styles.buttons} backgroundColor="#148C0A"
+                            color="white"
+                            title="Save"
+                            onPress={() => {
+                                this.createNewExam()
+                                console.log("lessonID in create new exam widget:", this.state.lessonId);
+                                this.props.navigation.navigate("Exam", {lessonId: this.state.lessonId})
+                            }}
                     />
-                    <Button	 style={styles.buttons} backgroundColor="red"
-                               color="white"
-                               title="Cancel"/>
+                    }
+                    {this.state.hiddenUpdateBtn &&
+                    <Button backgroundColor="#1869AD"
+                            color="white"
+                            title="Edit"
+                            style={styles.buttons}
+                            onPress={() => {
+                                this.updateExam();
+                                this.props.navigation.navigate("ExamWidget", {examId: this.state.examId})
+                            }}/>
+                    }
+
+
+                    <Button	 style={styles.buttons} backgroundColor="#89868E"
+                                color="white"
+                                title="Cancel"
+                                onPress={() => {
+                                    this.props.navigation.navigate("ExamWidget", {examId: this.state.examId})
+                                }}/>
                 </View>
 
             </ScrollView>

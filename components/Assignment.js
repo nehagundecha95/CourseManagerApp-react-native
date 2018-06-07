@@ -30,10 +30,10 @@ export default class Assignment extends React.Component {
     componentWillReceiveProps(){
         fetch("http://10.0.0.138:8080/api/lesson/" + this.state.lessonId + "/assignment")
             .then(response => (response.json()))
-            .then(widgets => (
-                // console.log("here:", widgets);
+            .then(widgets => {
+                console.log("here:", widgets);
                 this.setState({widgets: widgets})
-            ))
+            })
     }
 
     render() {
@@ -53,7 +53,7 @@ export default class Assignment extends React.Component {
                         subtitle={widget.description}
                         title={widget.title}/>))}
 
-                <Text h4>Create new widget</Text>
+                {/*<Text h4>Create new widget</Text>*/}
 
                 <Button
                     onPress={() => {

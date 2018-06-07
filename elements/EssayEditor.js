@@ -14,7 +14,8 @@ export default class EssayEditor extends React.Component {
             points: 0,
             hiddenUpdateBtn: false,
             examId: '',
-            questionId: ''
+            questionId: '',
+            hiddenSaveBtn: true
 
         }
         if(this.props.navigation.getParam("questionId")!==undefined){
@@ -26,6 +27,8 @@ export default class EssayEditor extends React.Component {
                     this.setState({title: essayQuestion.title})
                     this.setState({description: essayQuestion.description})
                     this.setState({points: essayQuestion.points})
+                    this.setState({questionId: questionId})
+                    this.setState({hiddenSaveBtn: false})
                     })
         }
         this.ExamService = ExamService.instance;
@@ -47,6 +50,17 @@ export default class EssayEditor extends React.Component {
             this.state.points,
             this.state.examId)
             .then(console.log("created essay question"));
+    }
+    updateEssayQuestion(){
+        console.log("update true false question");
+        this.ExamService.updateEssayQuestion(
+            this.state.title,
+            this.state.description,
+            this.state.points,
+            this.state.questionId);
+    }
+    delete(){
+        this.ExamService.deleteEssayQuestion(this.state.questionId);
     }
     render() {
         return(
@@ -76,24 +90,38 @@ export default class EssayEditor extends React.Component {
                     Points is required
                 </FormValidationMessage>
 
-                <Button	backgroundColor="green"
-                           color="white"
-                           title="Save"
-                           style={styles.buttons}
-                           onPress={()=>{this.createNewEssayQuestion();
-                               this.props.navigation.navigate("ExamWidget",{examId: this.state.questionId})}}/>
+                {this.state.hiddenSaveBtn &&
+                <Button backgroundColor="#148C0A"
+                        color="white"
+                        title="Save"
+                        style={styles.buttons}
+                        onPress={() => {
+                            this.createNewEssayQuestion();
+                            this.props.navigation.navigate("ExamWidget", {examId: this.state.questionId})
+                        }}/>
+                }
 
                 {this.state.hiddenUpdateBtn &&
-                <Button backgroundColor="blue"
+                <Button backgroundColor="#1869AD"
                         color="white"
                         title="Edit"
                         style={styles.buttons}
                         onPress={() => {
-                            this.updateTrueFalseQuestion();
+                            this.updateEssayQuestion();
                             this.props.navigation.navigate("ExamWidget", {examId: this.state.questionId})
                         }}/>
                 }
-                <Button	backgroundColor="red"
+                {this.state.hiddenUpdateBtn &&
+                <Button style={styles.buttons} backgroundColor="#CD2704"
+                        color="white"
+                        title="Delete"
+                        onPress={() => {
+                            this.delete();
+                            this.props.navigation.navigate("ExamWidget", {examId: this.state.examId})
+                        }}/>
+                }
+
+                <Button	backgroundColor="#89868E"
                     color="white"
                     title="Cancel"
                     style={styles.buttons}
@@ -109,8 +137,11 @@ export default class EssayEditor extends React.Component {
 
                 <View style={styles.previewSection}>
 
-                    <Text h4>{this.state.title}</Text>
-                    <Text style={{textAlign: 'right'}} h4>{this.state.points} pts</Text>
+                    <View style={styles.previewSectionHeader}>
+                        <Text style={{margin: 10, color: '#EBE8E7'}} h4>{this.state.title}</Text>
+                        <Text style={{textAlign: 'right',margin: 10, color: '#EBE8E7'}} h4>{this.state.points} pts</Text>
+                    </View>
+                    <View style={styles.previewSectioninside}>
                     <Text>{this.state.description}</Text>
                     <Text h4>Essay answer</Text>
                     <TextInput style={styles.textInputEssayAns}
@@ -118,6 +149,7 @@ export default class EssayEditor extends React.Component {
                                editable = {true}
                                maxLength = {40}
                     />
+                    </View>
 
                 </View>
 
@@ -131,9 +163,29 @@ const styles = StyleSheet.create({
         margin: 5
     },
     previewSection:{
-        padding: 15,
         borderWidth: 1,
-        margin: 5
+        borderColor: '#A19E9D',
+        margin: 5,
+        backgroundColor: '#D3D1D0',
+        borderRadius: 5
+
+
+    },
+    previewSectionHeader:{
+        flex:1,
+        flexDirection: 'row',
+        justifyContent:'space-between',
+        backgroundColor: 'black',
+        borderWidth: 1,
+        borderColor: 'black',
+        borderTopEndRadius: 5,
+        borderTopStartRadius:5
+    },
+    previewSectioninside:{
+        padding: 15,
+        // borderWidth: 1,
+        margin: 5,
+        backgroundColor: '#D3D1D0'
 
     },
     previewHeader: {
@@ -142,10 +194,12 @@ const styles = StyleSheet.create({
     },
     textInputEssayAns: {
         margin: 5,
-        borderWidth: 1, height: 100, backgroundColor: 'white'
+        borderWidth: 1, borderColor: '#A19E9D',height: 100, backgroundColor: 'white',
+        borderRadius: 5
     },
     textInput: {
         margin: 5,
-        borderWidth: 1, height: 50, backgroundColor: 'white'
+        borderWidth: 1, borderColor: '#A19E9D',height: 50, backgroundColor: 'white',
+        borderRadius: 5
     },
 });

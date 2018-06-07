@@ -58,6 +58,11 @@ export default class AssignmentService {
                 return response.json();
             });
     }
+    deleteAssignment(id){
+        return fetch('http://10.0.0.138:8080/api/assignment/'+id, {
+            method: 'delete'
+        })
+    }
 
 
 

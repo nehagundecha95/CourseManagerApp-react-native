@@ -15,7 +15,8 @@ class TrueFalseQuestionEditor extends React.Component {
       points: 0,
       isTrue: true,
       hiddenUpdateBtn: false,
-      examId: ''
+      examId: '',
+        hiddenSaveBtn: true
 
     }
       if(this.props.navigation.getParam("questionId")!==undefined){
@@ -27,7 +28,10 @@ class TrueFalseQuestionEditor extends React.Component {
                   this.setState({title: trueFalseQuestion.title});
                   this.setState({description: trueFalseQuestion.description});
                   this.setState({points: trueFalseQuestion.points});
-                  this.setState({isTrue: trueFalseQuestion.isTrue})})
+                  this.setState({isTrue: trueFalseQuestion.isTrue})
+                  this.setState({questionId: questionId})
+                  this.setState({hiddenSaveBtn: false})
+              })
       }
 
       this.ExamService = ExamService.instance;
@@ -40,6 +44,7 @@ class TrueFalseQuestionEditor extends React.Component {
         })
     }
 
+
   updateForm(newState) {
     this.setState(newState)
       console.log(newState);
@@ -48,18 +53,38 @@ class TrueFalseQuestionEditor extends React.Component {
 
     updateTrueFalseQuestion(){
       console.log("update true false question");
+        console.log(this.props.navigation.state.params)
+        this.ExamService.updateTrueFalseQuestion(
+            this.state.title,
+            this.state.description,
+            this.state.points,
+            this.state.isTrue,
+            this.state.questionId)
+            .then(response =>{
+                this.props.navigation.state.params.refresh();
+                this.props.navigation.goBack();
+            });
+
     }
 
 
   createNewTrueFalseQuestion(){
+
+      console.log(this.props.navigation.state.params)
       this.ExamService.createTrueFalseQuestion(
           this.state.title,
           this.state.description,
           this.state.points,
           this.state.isTrue,
           this.state.examId)
-          .then(console.log("created truefalse question"));
+          .then(response =>{
+          this.props.navigation.state.params.refresh();
+          this.props.navigation.goBack();
+      });
   }
+    delete(){
+        this.ExamService.deleteTrueFalseQuestion(this.state.questionId);
+    }
 
   render() {
     return(
@@ -92,30 +117,44 @@ class TrueFalseQuestionEditor extends React.Component {
         <CheckBox onPress={() => this.updateForm({isTrue: !this.state.isTrue})}
                   checked={this.state.isTrue} title='The answer is true'/>
 
-        <Button	backgroundColor="green"
-                 color="white"
-                 title="Save"
-                   style={styles.buttons}
-                 onPress={()=>{this.createNewTrueFalseQuestion();
-                     this.props.navigation.navigate("ExamWidget",{examId: this.state.questionId})}}/>
+          {this.state.hiddenSaveBtn &&
+          <Button backgroundColor="#148C0A"
+                  color="white"
+                  title="Save"
+                  style={styles.buttons}
+                  onPress={() => {
+                      this.createNewTrueFalseQuestion();
+                      this.props.navigation.navigate("ExamWidget", {examId: this.state.examId})
+                  }}/>
+          }
 
           {this.state.hiddenUpdateBtn &&
-          <Button backgroundColor="blue"
+          <Button backgroundColor="#1869AD"
                   color="white"
                   title="Edit"
                   style={styles.buttons}
                   onPress={() => {
                       this.updateTrueFalseQuestion();
-                      this.props.navigation.navigate("ExamWidget", {examId: this.state.questionId})
+                      this.props.navigation.navigate("ExamWidget", {examId: this.state.examId})
+                  }}/>
+          }
+          {this.state.hiddenUpdateBtn &&
+          <Button style={styles.buttons} backgroundColor="#CD2704"
+                  color="white"
+                  title="Delete"
+                  onPress={() => {
+                      this.delete();
+                      this.props.navigation.navigate("ExamWidget", {examId: this.state.examId})
                   }}/>
           }
 
-        <Button	backgroundColor="red"
+
+          <Button	backgroundColor="#89868E"
                  color="white"
                  title="Cancel"
                    style={styles.buttons}
                    onPress={() => {
-                       this.props.navigation.navigate("ExamWidget", {examId: this.state.questionId})
+                       this.props.navigation.navigate("ExamWidget", {examId: this.state.examId})
                    }}/>
 
         <Text style={styles.previewHeader} h3>Preview</Text>
@@ -123,9 +162,15 @@ class TrueFalseQuestionEditor extends React.Component {
 
           <View style={styles.previewSection}>
 
-              <Text h4>{this.state.title}</Text>
-              <Text style={{textAlign: 'right'}} h4>{this.state.points} pts</Text>
-              <Text>{this.state.description}</Text>
+              <View style={styles.previewSectionHeader}>
+                  <Text style={{margin: 10, color: '#EBE8E7'}} h4>{this.state.title}</Text>
+                  <Text style={{textAlign: 'right',margin: 10, color: '#EBE8E7'}} h4>{this.state.points} pts</Text>
+              </View>
+              <View style={styles.previewSectioninside}>
+                  <Text>{this.state.description}</Text>
+                  <CheckBox title='True'/>
+                  <CheckBox title='False'/>
+              </View>
 
           </View>
 
@@ -142,9 +187,28 @@ const styles = StyleSheet.create({
       margin: 5
     },
     previewSection:{
-        padding: 15,
         borderWidth: 1,
-        margin: 5
+        borderColor: '#A19E9D',
+        margin: 5,
+        backgroundColor: '#D3D1D0',
+        borderRadius: 5
+
+    },
+    previewSectionHeader:{
+        flex:1,
+        flexDirection: 'row',
+        justifyContent:'space-between',
+        backgroundColor: 'black',
+        borderWidth: 1,
+        borderColor: 'black',
+        borderTopEndRadius: 5,
+        borderTopStartRadius:5
+    },
+    previewSectioninside:{
+        padding: 15,
+        // borderWidth: 1,
+        margin: 5,
+        backgroundColor: '#D3D1D0'
 
     },
     previewHeader: {
@@ -153,10 +217,12 @@ const styles = StyleSheet.create({
     },
     textInputEssayAns: {
         margin: 5,
-        borderWidth: 1, height: 100, backgroundColor: 'white'
+        borderWidth: 1, borderColor: '#A19E9D', height: 100, backgroundColor: 'white',
+        borderRadius: 5
     },
     textInput: {
         margin: 5,
-        borderWidth: 1, height: 50, backgroundColor: 'white'
+        borderWidth: 1, borderColor: '#A19E9D', height: 50, backgroundColor: 'white',
+        borderRadius: 5
     }
 });

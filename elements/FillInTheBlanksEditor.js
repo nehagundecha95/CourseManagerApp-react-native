@@ -12,12 +12,13 @@ export default class FillInTheBlanksEditor extends React.Component {
             title: '',
             description: '',
             points: 0,
-            variables: 'variables',
+            variables: '',
             hiddenUpdateBtn: false,
             examId: '',
             questionId: '',
             showPreview: false,
-            array: []
+            array: [],
+            hiddenSaveBtn: true
         }
         if(this.props.navigation.getParam("questionId")!==undefined){
             const questionId = this.props.navigation.getParam("questionId");
@@ -29,6 +30,8 @@ export default class FillInTheBlanksEditor extends React.Component {
                     this.setState({description: fillInTheBlanksQuestion.description});
                     this.setState({points: fillInTheBlanksQuestion.points});
                     this.setState({variables: fillInTheBlanksQuestion.variables});
+                    this.setState({questionId: questionId});
+                    this.setState({hiddenSaveBtn: false})
 
                 })
         }
@@ -42,7 +45,7 @@ export default class FillInTheBlanksEditor extends React.Component {
         })
     }
     componentWillMount(){
-        this.getVariablesPreview("default");
+        this.getVariablesPreview(this.state.variables);
     }
     createNewFillInTheBlanksQuestion(){
         this.ExamService.createFillInTheBlanksQuestion(
@@ -60,11 +63,23 @@ export default class FillInTheBlanksEditor extends React.Component {
     getVariablesPreview(text){
         console.log("variables:", this.state.variables)
         // var string = 'hbjhbhjgb[hbjhb]wjwnjk'
-        var myArray = text.split(new RegExp("\\[\\w+\\=*\\]"));
+        var myArray = text.split(new RegExp("\\[\\w+\\=*\\w+\\]"));
         this.setState({variables: text})
         this.setState({array: myArray})
         this.setState({showPreview: true});
         console.log(myArray)
+    }
+    updateFillInTheBlanksQuestion(){
+        console.log("update true false question");
+        this.ExamService.updateFillInTheBlanksQuestion(
+            this.state.title,
+            this.state.description,
+            this.state.points,
+            this.state.variables,
+            this.state.questionId);
+    }
+    delete(){
+        this.ExamService.deleteFillInTheBlanksQuestion(this.state.questionId);
     }
 
     render() {
@@ -107,25 +122,40 @@ export default class FillInTheBlanksEditor extends React.Component {
                     Fill In the Blanks variables is required
                 </FormValidationMessage>
 
-                <Button	backgroundColor="green"
-                           color="white"
-                           title="Save"
-                           style={styles.buttons}
-                           onPress={()=>{this.createNewFillInTheBlanksQuestion();
-                               this.props.navigation.navigate("ExamWidget",{examId: this.state.questionId})}}/>
-
-                {this.state.hiddenUpdateBtn &&
-                <Button backgroundColor="blue"
+                {this.state.hiddenSaveBtn &&
+                <Button backgroundColor="#148C0A"
                         color="white"
-                        title="Edit"
+                        title="Save"
                         style={styles.buttons}
                         onPress={() => {
-                            // this.updateMultiChoiceQuestionQuestion();
+                            this.createNewFillInTheBlanksQuestion();
                             this.props.navigation.navigate("ExamWidget", {examId: this.state.questionId})
                         }}/>
                 }
 
-                <Button backgroundColor="red"
+                {this.state.hiddenUpdateBtn &&
+                <Button backgroundColor="#1869AD"
+                        color="white"
+                        title="Edit"
+                        style={styles.buttons}
+                        onPress={() => {
+                            this.updateFillInTheBlanksQuestion();
+                            this.props.navigation.navigate("ExamWidget", {examId: this.state.questionId})
+                        }}/>
+                }
+
+                {this.state.hiddenUpdateBtn &&
+                <Button style={styles.buttons} backgroundColor="#CD2704"
+                        color="white"
+                        title="Delete"
+                        onPress={() => {
+                            this.delete();
+                            this.props.navigation.navigate("ExamWidget", {examId: this.state.examId})
+                        }}/>
+                }
+
+
+                <Button backgroundColor="#89868E"
                         color="white"
                         title="Cancel"
                         style={styles.buttons}
@@ -137,17 +167,30 @@ export default class FillInTheBlanksEditor extends React.Component {
 
                 <View style={styles.previewSection}>
 
-                    <Text h4>{this.state.title}</Text>
-                    <Text style={{textAlign: 'right'}} h4>{this.state.points} pts</Text>
-                    <Text>{this.state.description}</Text>
-                    {this.state.array.map((element, index)=> (
-                        <View  style={{flexDirection: 'row'}} key={index}>
-                            <Text h4>
-                                {element}
-                            </Text>
-                            <TextInput style={{width:100, borderWidth: 1}}/>
+                    <View style={styles.previewSectionHeader}>
+                        <Text style={{margin: 10, color: '#EBE8E7'}} h4>{this.state.title}</Text>
+                        <Text style={{textAlign: 'right',margin: 10, color: '#EBE8E7'}} h4>{this.state.points} pts</Text>
+                    </View>
+                    <View style={styles.previewSectioninside}>
+                        <Text>{this.state.description}</Text>
+                        <View  flexWrap={'wrap'} flexDirection={'row'}>
+                        {this.state.array.map((element, index)=> {
+                            if (index === (this.state.array.length - 1)) {
+                                return <View style={{flexDirection: 'row'}} flexWrap={'wrap'} key={index}>
+                                    <Text h4>
+                                        {element}
+                                    </Text>
+                                </View>
+                            }
+                            return <View style={{flexDirection: 'row'}} key={index} flexWrap={'wrap'}>
+                                <Text h4>
+                                    {element}
+                                </Text>
+                                <TextInput style={{width: 100, borderWidth: 1, borderColor: '#A19E9D'}}/>
+                            </View>
+                        })}
                         </View>
-                    ))}
+                    </View>
                     {/*<Text>{this.state.variables}</Text>*/}
                 </View>
 
@@ -162,9 +205,28 @@ const styles = StyleSheet.create({
         margin: 5
     },
     previewSection:{
-        padding: 15,
         borderWidth: 1,
-        margin: 5
+        borderColor: '#A19E9D',
+        margin: 5,
+        backgroundColor: '#D3D1D0',
+        borderRadius: 5
+
+    },
+    previewSectionHeader:{
+        flex:1,
+        flexDirection: 'row',
+        justifyContent:'space-between',
+        backgroundColor: 'black',
+        borderWidth: 1,
+        borderColor: 'black',
+        borderTopEndRadius: 5,
+        borderTopStartRadius:5
+    },
+    previewSectioninside:{
+        padding: 15,
+        // borderWidth: 1,
+        margin: 5,
+        backgroundColor: '#D3D1D0'
 
     },
     previewHeader: {
@@ -173,10 +235,12 @@ const styles = StyleSheet.create({
     },
     textInputEssayAns: {
         margin: 5,
-        borderWidth: 1, height: 100, backgroundColor: 'white'
+        borderWidth: 1,borderColor: '#A19E9D', height: 100, backgroundColor: 'white',
+        borderRadius: 5
     },
     textInput: {
         margin: 5,
-        borderWidth: 1, height: 50, backgroundColor: 'white'
+        borderWidth: 1,borderColor: '#A19E9D', height: 50, backgroundColor: 'white',
+        borderRadius: 5
     }
 });

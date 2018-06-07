@@ -26,11 +26,39 @@ export default class ExamService {
                 'Content-Type': 'application/json'
             },
             method: 'POST'
-        }).then(function (response) {
-            console.log("response:", response)
-            return response.json();
+        })
+        //     .then(function (response) {
+        //     console.log("response:", response)
+        //     return response.json();
+        // })
+    }
+
+    updateTrueFalseQuestion(title,description,points,isTrue, questionId) {
+        // console.log("inside update course course service ")
+        // console.log("moduleId=",moduleId)
+        // console.log("module on=object in module service :",module)
+        // console.log("inside updateAssignmentservice class")
+        // console.log("assignment id:",assignmentId)
+        return fetch('http://10.0.0.138:8080/api/exam/'+questionId+'/update/truefalse',{
+            method: 'put',
+            body: JSON.stringify({
+                title: title,
+                description: description,
+                points: points,
+                isTrue: isTrue
+            }),
+            headers: {
+                'content-type': 'application/json'
+            }
+        })
+
+    }
+    deleteTrueFalseQuestion(id){
+        return fetch('http://10.0.0.138:8080/api/exam/truefalse/'+id, {
+            method: 'delete'
         })
     }
+
     createMultipleChoiceQuestion(title,description,points,options,correctOption,questionId) {
         return fetch('http://10.0.0.138:8080/api/exam/'+questionId +'/choice', {
             body: JSON.stringify({
@@ -49,6 +77,33 @@ export default class ExamService {
             return response.json();
         })
     }
+
+    updateMultipleChoiceQuestion(title,description,points,options,correctOption, questionId) {
+
+        return fetch('http://10.0.0.138:8080/api/exam/'+questionId+'/update/multi',{
+            method: 'put',
+            body: JSON.stringify({
+                title: title,
+                description: description,
+                points: points,
+                options: options,
+                correctOption: correctOption
+            }),
+            headers: {
+                'content-type': 'application/json'
+            }
+        })
+            .then(function (response){
+                console.log(response)
+                return response.json();
+            });
+    }
+    deleteMultipleChoiceQuestion(id){
+        return fetch('http://10.0.0.138:8080/api/exam/multi/'+id, {
+            method: 'delete'
+        })
+    }
+
 
 
     createFillInTheBlanksQuestion(title,description,points,variables,questionId) {
@@ -69,6 +124,30 @@ export default class ExamService {
         })
     }
 
+    updateFillInTheBlanksQuestion(title,description,points,variables, questionId) {
+
+        return fetch('http://10.0.0.138:8080/api/exam/'+questionId+'/update/blanks',{
+            method: 'put',
+            body: JSON.stringify({
+                title: title,
+                description: description,
+                points: points,
+                variables: variables
+            }),
+            headers: {
+                'content-type': 'application/json'
+            }
+        })
+            .then(function (response){
+                console.log(response)
+                return response.json();
+            });
+    }
+    deleteFillInTheBlanksQuestion(id){
+        return fetch('http://10.0.0.138:8080/api/exam/blanks/'+id, {
+            method: 'delete'
+        })
+    }
 
 
     createEssayQuestion(title,description,points,questionId) {
@@ -88,6 +167,31 @@ export default class ExamService {
         })
     }
 
+    updateEssayQuestion(title,description,points, questionId) {
+
+        return fetch('http://10.0.0.138:8080/api/exam/'+questionId+'/update/essay',{
+            method: 'put',
+            body: JSON.stringify({
+                title: title,
+                description: description,
+                points: points
+
+            }),
+            headers: {
+                'content-type': 'application/json'
+            }
+        })
+            .then(function (response){
+                console.log(response)
+                return response.json();
+            });
+    }
+    deleteEssayQuestion(id){
+        return fetch('http://10.0.0.138:8080/api/exam/essay/'+id, {
+            method: 'delete'
+        })
+    }
+
     createExam(title, description, lessonId) {
         return fetch('http://10.0.0.138:8080/api/exam/'+lessonId+'/exam', {
             body: JSON.stringify({
@@ -103,5 +207,30 @@ export default class ExamService {
             return response.json();
         })
     }
+    updateExam(title,description,examId) {
+
+        return fetch('http://10.0.0.138:8080/api/exam/'+examId+'/update',{
+            method: 'put',
+            body: JSON.stringify({
+                title: title,
+                description: description,
+
+            }),
+            headers: {
+                'content-type': 'application/json'
+            }
+        })
+            .then(function (response){
+                console.log(response)
+                return response.json();
+            });
+    }
+
+    deleteExam(id){
+        return fetch('http://10.0.0.138:8080/api/exam/'+id, {
+            method: 'delete'
+        })
+    }
+
 
 }

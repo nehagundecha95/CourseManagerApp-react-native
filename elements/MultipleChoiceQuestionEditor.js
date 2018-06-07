@@ -19,7 +19,8 @@ class MultipleChoiceQuestionEditor extends React.Component {
       hiddenUpdateBtn: false,
       createOption: '',
       option: '',
-      correctOption: ''
+      correctOption: '',
+      hiddenSaveBtn: true
 
     }
       if(this.props.navigation.getParam("questionId")!==undefined){
@@ -33,6 +34,8 @@ class MultipleChoiceQuestionEditor extends React.Component {
                   this.setState({points: MultipleChoiceQuestion.points})
                   this.setState({options: MultipleChoiceQuestion.options})
                   this.setState({correctOption: MultipleChoiceQuestion.correctOption})
+                  this.setState({questionId: questionId})
+                  this.setState({hiddenSaveBtn: false})
 
               })
       }
@@ -81,6 +84,19 @@ class MultipleChoiceQuestionEditor extends React.Component {
       console.log("correct option:",index)
       this.setState({correctOption: index})
     }
+    updateMultiChoiceQuestionQuestion(){
+        console.log("update true false question");
+        this.ExamService.updateMultipleChoiceQuestion(
+            this.state.title,
+            this.state.description,
+            this.state.points,
+            this.state.options,
+            this.state.correctOption,
+            this.state.questionId);
+    }
+    delete(){
+        this.ExamService.deleteMultipleChoiceQuestion(this.state.questionId);
+    }
 
 
 
@@ -115,35 +131,46 @@ class MultipleChoiceQuestionEditor extends React.Component {
                       Description is required
                   </FormValidationMessage>
 
-                <FormLabel>Options</FormLabel>
-                <FormInput onChangeText={
+                <FormLabel>New Option</FormLabel>
+                <FormInput value={this.state.option.toString()} onChangeText={
                       text => this.updateForm({option: text})
                   }/>
-                  <Button style={styles.buttons} title="Create new Option"
+                  <Button backgroundColor= "#2D9C98" style={styles.buttons} title="Create new Option"
                   onPress={()=>{this.createNewOption()
                   console.log("options:",this.state.options)}}/>
 
 
-
-                <Button	backgroundColor="green"
-                         color="white"
-                         title="Save"
-                         style={styles.buttons}
-                         onPress={()=>{this.createNewMultipleChoiceQuestion();
-                             this.props.navigation.navigate("ExamWidget",{examId: this.state.questionId})}}/>
+                  {this.state.hiddenSaveBtn &&
+                  < Button    backgroundColor="#148C0A"
+                      color="white"
+                      title="Save"
+                      style={styles.buttons}
+                      onPress={()=>{this.createNewMultipleChoiceQuestion();
+                      this.props.navigation.navigate("ExamWidget",{examId: this.state.questionId})}}/>
+                  }
 
                   {this.state.hiddenUpdateBtn &&
-                  <Button backgroundColor="blue"
+                  <Button backgroundColor="#1869AD"
                           color="white"
                           title="Edit"
                           style={styles.buttons}
                           onPress={() => {
-                              // this.updateMultiChoiceQuestionQuestion();
+                              this.updateMultiChoiceQuestionQuestion();
                               this.props.navigation.navigate("ExamWidget", {examId: this.state.questionId})
                           }}/>
                   }
 
-                  <Button backgroundColor="red"
+                  {this.state.hiddenUpdateBtn &&
+                  <Button style={styles.buttons} backgroundColor="#CD2704"
+                          color="white"
+                          title="Delete"
+                          onPress={() => {
+                              this.delete();
+                              this.props.navigation.navigate("ExamWidget", {examId: this.state.examId})
+                          }}/>
+                  }
+
+                  <Button backgroundColor="#89868E"
                              color="white"
                              title="Cancel"
                              style={styles.buttons}
@@ -151,26 +178,29 @@ class MultipleChoiceQuestionEditor extends React.Component {
                                  this.props.navigation.navigate("ExamWidget", {examId: this.state.questionId})
                              }}/>
 
-                <Text h3>Preview</Text>
+                <Text style={styles.previewHeader} h3>Preview</Text>
                   <View style={styles.previewSection}>
 
-                      <Text h4>{this.state.title}</Text>
-                      <Text style={{textAlign: 'right'}} h4>{this.state.points} pts</Text>
-                      <Text>{this.state.description}</Text>
-                      <RadioGroup onSelect={(index)=>this.setCorrectOption(index)}>
-                          {this.state.options.map((option, index)=> (
+                      <View style={styles.previewSectionHeader}>
+                          <Text style={{margin: 10, color: '#EBE8E7'}} h4>{this.state.title}</Text>
+                          <Text style={{textAlign: 'right',margin: 10, color: '#EBE8E7'}} h4>{this.state.points} pts</Text>
+                      </View>
+                      <View style={styles.previewSectioninside}>
+                          <Text>{this.state.description}</Text>
+                          <RadioGroup selectedIndex={this.state.correctOption} onSelect={(index)=>this.setCorrectOption(index)}>
+                              {this.state.options.map((option, index)=> (
 
-                              <RadioButton key={index}>
-                                  <View style={{flexDirection: 'row'}}>
-                                      <Text h4>
-                                          {option}
-                                      </Text>
-                                      <Button title="Delete" onPress={()=>{this.deleteRadioBtn(index)}}/>
-                                  </View>
-                              </RadioButton>
-
-                          ))}
-                      </RadioGroup>
+                                  <RadioButton style={{flex:1, flexDirection:'row'}} key={index}>
+                                      <View style={ styles.radioEntry}>
+                                          <Text h4>
+                                              {option}
+                                          </Text>
+                                          <Button title="Delete" onPress={()=>{this.deleteRadioBtn(index)}}/>
+                                      </View>
+                                  </RadioButton>
+                              ))}
+                          </RadioGroup>
+                      </View>
 
                   </View>
 
@@ -191,17 +221,41 @@ class MultipleChoiceQuestionEditor extends React.Component {
 export default MultipleChoiceQuestionEditor
 
 const styles = StyleSheet.create({
-    buttons:{
+    buttons: {
         margin: 5
     },
     previewSection:{
-        padding: 15,
         borderWidth: 1,
-        margin: 5
+        borderColor: '#A19E9D',
+        margin: 5,
+        backgroundColor: '#D3D1D0',
+        borderRadius: 5
+
+    },
+    previewSectionHeader:{
+        flex:1,
+        flexDirection: 'row',
+        justifyContent:'space-between',
+        backgroundColor: 'black',
+        borderWidth: 1,
+        borderColor: 'black',
+        borderTopEndRadius: 5,
+        borderTopStartRadius:5
+    },
+    previewSectioninside:{
+        padding: 15,
+        // borderWidth: 1,
+        margin: 5,
+        backgroundColor: '#D3D1D0'
 
     },
     previewHeader: {
         marginTop: 20,
         margin: 5
+    },
+    radioEntry: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between'
     }
 });
