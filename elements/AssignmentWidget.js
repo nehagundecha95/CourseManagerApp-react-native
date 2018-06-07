@@ -11,7 +11,7 @@ export default class AssignmentWidget extends React.Component {
         super(props)
         this.state = {
             lessonId: '',
-            title: '',
+            title: 'Assignment',
             description: '',
             points: '',
             widgets: [],
@@ -34,11 +34,10 @@ export default class AssignmentWidget extends React.Component {
         }
 
         this.AssignmentService = AssignmentService.instance;
-        // this.setAssignment = this.setAssignment.bind(this);
     }
     componentDidMount() {
         // const {navigation} = this.props;
-        const lessonId = this.props.navigation.getParam("lessonId",1 )
+        const lessonId = this.props.navigation.getParam("lessonId", 1)
         this.setState({
             lessonId: lessonId
         })
@@ -46,12 +45,16 @@ export default class AssignmentWidget extends React.Component {
     }
 
     updateForm(newState) {
-        // console.log(newState)
         this.setState(newState)
     }
 
     createNewAssignment(){
-        this.AssignmentService.createAssignment(this.state.title,this.state.description,this.state.points, this.state.lessonId)
+        this.AssignmentService
+            .createAssignment(
+                this.state.title,
+                this.state.description,
+                this.state.points,
+                this.state.lessonId)
             .then(response =>{
                 this.props.navigation.state.params.refresh();
                 this.props.navigation.goBack();
@@ -59,8 +62,12 @@ export default class AssignmentWidget extends React.Component {
     }
 
     updateAssignment(){
-        // console.log("in update assignment client")
-        this.AssignmentService.updateAssignment(this.state.title,this.state.description,this.state.points, this.state.assignmentId)
+        this.AssignmentService
+            .updateAssignment(
+                this.state.title,
+                this.state.description,
+                this.state.points,
+                this.state.assignmentId)
             .then(response =>{
                 this.props.navigation.state.params.refresh();
                 this.props.navigation.goBack();
@@ -111,12 +118,13 @@ export default class AssignmentWidget extends React.Component {
                         }
 
                         {this.state.hiddenUpdateBtn &&
-                            <Button style={styles.buttons} backgroundColor="#1869AD"
+                            <Button style={styles.buttons} backgroundColor="#148C0A"
                                     color="white"
                                     title="Edit"
                                     onPress={() => {
                                         this.updateAssignment();
-                                        this.props.navigation.navigate("Assignment", {lessonId: this.state.lessonId})
+                                        this.props.navigation
+                                            .navigate("Assignment", {lessonId: this.state.lessonId})
                                     }}/>
                         }
                     {this.state.hiddenUpdateBtn &&
@@ -125,39 +133,48 @@ export default class AssignmentWidget extends React.Component {
                             title="Delete"
                             onPress={() => {
                                 this.deleteAssignment();
-                                this.props.navigation.navigate("Assignment", {lessonId: this.state.lessonId})
+                                this.props.navigation
+                                    .navigate("Assignment", {lessonId: this.state.lessonId})
                             }}/>
                     }
 
                     <Button	 style={styles.buttons} backgroundColor="#89868E"
                                color="white"
                                title="Cancel"
-                               onPress={()=>{this.props.navigation.navigate("Assignment",{lessonId:this.state.lessonId})}}/>
+                               onPress={()=>{this.props.navigation
+                                   .navigate("Assignment",{lessonId:this.state.lessonId})}}/>
 
                     <Text style={styles.previewHeader} h4>Preview</Text>
                     <View style={styles.previewSection}>
                         <View style={styles.previewSectionHeader}>
-                            <Text style={{margin: 10, color: '#EBE8E7'}} h4>{this.state.title}</Text>
-                            <Text style={{textAlign: 'right',margin: 10, color: '#EBE8E7'}} h4>{this.state.points} pts</Text>
+                            <Text style={{margin: 10, color: '#EBE8E7',fontSize: 25}} h4>{this.state.title}</Text>
+                            <Text style={{textAlign: 'right',margin: 10, color: '#EBE8E7',fontSize: 25}} h4>{this.state.points} pts</Text>
                         </View>
                         <View style={styles.previewSectioninside}>
-                            <Text>{this.state.description}</Text>
-                            <Text h4>Essay answer</Text>
+                            <Text style={{fontSize: 20,marginBottom: 20,}}>{this.state.description}</Text>
+                            <Text style={{fontSize: 15}}>Essay answer</Text>
                             <TextInput style={styles.textInputEssayAns}
                                 editable = {true}
                                 maxLength = {40}/>
-                            <Text h4>Upload a file</Text>
+                            <Text style={{fontSize: 15}}>Upload a file</Text>
+                            <View style={{flex:1, flexDirection: 'row'}}>
+
+                                <TextInput style={styles.textInput2}
+                                           editable = {true}
+                                           maxLength = {40}/>
+                                <Button style={{justifyContent: 'flex-end', marginTop: 7}} backgroundColor="#89868E" title="Choose file"/>
+                            </View>
+                            <Text style={{fontSize: 15}} >Submit a link</Text>
                             <TextInput style={styles.textInput}
                                        editable = {true}
                                        maxLength = {40}/>
-                            <Text h4>Submit a link</Text>
-                            <TextInput style={styles.textInput}
-                                       editable = {true}
-                                       maxLength = {40}/>
+                            <View style={{flex:1, flexDirection:'row', margin: 10}}>
+                                <Button backgroundColor="#89868E" title="Cancel"/>
+                                <Button backgroundColor="#89868E" title="Submit"/>
+                            </View>
                         </View>
                     </View>
                 </View>
-
             </ScrollView>
         )
     }
@@ -170,7 +187,6 @@ const styles = StyleSheet.create({
         margin: 5,
         backgroundColor: '#D3D1D0',
         borderRadius: 5
-
     },
     previewSectionHeader:{
         flex:1,
@@ -180,14 +196,13 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: 'black',
         borderTopEndRadius: 5,
-        borderTopStartRadius:5
+        borderTopStartRadius:5,
+
     },
     previewSectioninside:{
         padding: 15,
-        // borderWidth: 1,
         margin: 5,
         backgroundColor: '#D3D1D0'
-
     },
     previewHeader: {
         marginTop: 20,
@@ -199,7 +214,8 @@ const styles = StyleSheet.create({
         borderColor: '#A19E9D',
         height: 100,
         backgroundColor: 'white',
-        borderRadius: 5
+        borderRadius: 5,
+        marginBottom: 15
     },
     textInput: {
         margin: 5,
@@ -207,16 +223,24 @@ const styles = StyleSheet.create({
         height: 50,
         borderColor: '#A19E9D',
         backgroundColor: 'white',
-        borderRadius: 5
+        borderRadius: 5,
+        marginBottom: 15
+    },
+    textInput2: {
+        margin: 5,
+        borderWidth: 1,
+        height: 50,
+        borderColor: '#A19E9D',
+        backgroundColor: 'white',
+        borderRadius: 5,
+        marginBottom: 15,
+        width: 218
     },
     buttons:{
         margin: 5
     },
     container: {
-    // flex: 1,
         backgroundColor: '#fff',
-    // alignItems: 'center',
-    // justifyContent: 'center',
-  },
+    },
 });
 

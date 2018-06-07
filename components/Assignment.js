@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, Alert, StyleSheet} from 'react-native'
+import {View, Alert, StyleSheet,ScrollView} from 'react-native'
 import {Text, ListItem, Button} from 'react-native-elements'
 
 export default class Assignment extends React.Component {
@@ -49,7 +49,7 @@ export default class Assignment extends React.Component {
 
     render() {
         return (
-
+            <ScrollView>
             <View style={{padding: 15}}>
 
                 {/*list of all widgets*/}
@@ -58,7 +58,6 @@ export default class Assignment extends React.Component {
                     <ListItem
                         onPress={() => {
                            this.props.navigation.navigate("AssignmentWidget", {assignmentId: widget.id,refresh:this.refresh})
-
                         }}
                         key={index}
                         subtitle={widget.description}
@@ -66,14 +65,15 @@ export default class Assignment extends React.Component {
 
                 {/*<Text h4>Create new widget</Text>*/}
 
-                <Button
+                <Button backgroundColor="#89868E"
                     onPress={() => {
                         this.props.navigation.navigate("AssignmentWidget", {lessonId: this.state.lessonId,refresh:this.refresh})
                     }}
                     title="Create new Assignment"
                 style={styles.buttons}/>
 
-            </View>)
+            </View>
+            </ScrollView>)
     }
 }
 

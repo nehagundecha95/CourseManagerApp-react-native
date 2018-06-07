@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View, Alert} from 'react-native'
+import {View, Alert,ScrollView} from 'react-native'
 import {Text, ListItem} from 'react-native-elements'
 
 class LessonList extends Component {
@@ -27,6 +27,7 @@ class LessonList extends Component {
   }
   render() {
     return(
+        <ScrollView>
       <View style={{padding: 15}}>
       {this.state.lessons.map(
         (lesson, index) => (
@@ -35,6 +36,7 @@ class LessonList extends Component {
             key={index}
             title={lesson.title}/>))}
       </View>
+        </ScrollView>
     )
   }
 }

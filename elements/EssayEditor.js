@@ -9,7 +9,7 @@ export default class EssayEditor extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            title: '',
+            title: 'Essay',
             description: '',
             points: 0,
             hiddenUpdateBtn: false,
@@ -109,7 +109,7 @@ export default class EssayEditor extends React.Component {
                 }
 
                 {this.state.hiddenUpdateBtn &&
-                <Button backgroundColor="#1869AD"
+                <Button backgroundColor="#148C0A"
                         color="white"
                         title="Edit"
                         style={styles.buttons}
@@ -145,17 +145,21 @@ export default class EssayEditor extends React.Component {
                 <View style={styles.previewSection}>
 
                     <View style={styles.previewSectionHeader}>
-                        <Text style={{margin: 10, color: '#EBE8E7'}} h4>{this.state.title}</Text>
-                        <Text style={{textAlign: 'right',margin: 10, color: '#EBE8E7'}} h4>{this.state.points} pts</Text>
+                        <Text style={{margin: 10, color: '#EBE8E7',fontSize: 25}} h4>{this.state.title}</Text>
+                        <Text style={{textAlign: 'right',margin: 10, color: '#EBE8E7',fontSize: 25}} h4>{this.state.points} pts</Text>
                     </View>
                     <View style={styles.previewSectioninside}>
-                    <Text>{this.state.description}</Text>
-                    <Text h4>Essay answer</Text>
+                    <Text style={{fontSize: 20,marginBottom: 20}}>{this.state.description}</Text>
+                    <Text style={{fontSize: 15}}>Essay answer</Text>
                     <TextInput style={styles.textInputEssayAns}
 
                                editable = {true}
                                maxLength = {40}
                     />
+                    </View>
+                    <View style={{flex:1, flexDirection:'row', margin: 10}}>
+                        <Button backgroundColor="#89868E" title="Cancel"/>
+                        <Button backgroundColor="#89868E" title="Submit"/>
                     </View>
 
                 </View>
@@ -201,12 +205,18 @@ const styles = StyleSheet.create({
     },
     textInputEssayAns: {
         margin: 5,
-        borderWidth: 1, borderColor: '#A19E9D',height: 100, backgroundColor: 'white',
+        borderWidth: 1,
+        borderColor: '#A19E9D',
+        height: 100,
+        backgroundColor: 'white',
         borderRadius: 5
     },
     textInput: {
         margin: 5,
-        borderWidth: 1, borderColor: '#A19E9D',height: 50, backgroundColor: 'white',
+        borderWidth: 1,
+        borderColor: '#A19E9D',
+        height: 50,
+        backgroundColor: 'white',
         borderRadius: 5
     },
 });

@@ -10,7 +10,7 @@ class TrueFalseQuestionEditor extends React.Component {
     super(props)
     this.state = {
       questionId: '',
-      title: '',
+      title: 'True False',
       description: '',
       points: 0,
       isTrue: true,
@@ -129,7 +129,7 @@ class TrueFalseQuestionEditor extends React.Component {
           }
 
           {this.state.hiddenUpdateBtn &&
-          <Button backgroundColor="#1869AD"
+          <Button backgroundColor="#148C0A"
                   color="white"
                   title="Edit"
                   style={styles.buttons}
@@ -163,13 +163,17 @@ class TrueFalseQuestionEditor extends React.Component {
           <View style={styles.previewSection}>
 
               <View style={styles.previewSectionHeader}>
-                  <Text style={{margin: 10, color: '#EBE8E7'}} h4>{this.state.title}</Text>
-                  <Text style={{textAlign: 'right',margin: 10, color: '#EBE8E7'}} h4>{this.state.points} pts</Text>
+                  <Text style={{margin: 10, color: '#EBE8E7',fontSize: 25}} h4>{this.state.title}</Text>
+                  <Text style={{textAlign: 'right',margin: 10, color: '#EBE8E7',fontSize: 25}} h4>{this.state.points} pts</Text>
               </View>
               <View style={styles.previewSectioninside}>
-                  <Text>{this.state.description}</Text>
+                  <Text style={{fontSize: 20,marginBottom: 20}}>{this.state.description}</Text>
                   <CheckBox title='True'/>
                   <CheckBox title='False'/>
+              </View>
+              <View style={{flex:1, flexDirection:'row', margin: 10}}>
+                  <Button backgroundColor="#89868E" title="Cancel"/>
+                  <Button backgroundColor="#89868E" title="Submit"/>
               </View>
 
           </View>

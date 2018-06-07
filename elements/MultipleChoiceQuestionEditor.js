@@ -1,6 +1,6 @@
 import React from 'react'
 import {StyleSheet, View, ScrollView} from 'react-native'
-import {Text, Button, CheckBox, ListItem} from 'react-native-elements'
+import {Text, Button, CheckBox, ListItem, Icon} from 'react-native-elements'
 import {FormLabel, FormInput, FormValidationMessage} from 'react-native-elements'
 import ExamService from "../services/ExamService";
 import {RadioGroup, RadioButton} from 'react-native-flexi-radio-button'
@@ -10,7 +10,7 @@ class MultipleChoiceQuestionEditor extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      title: '',
+      title: 'Multiple Choice',
       description: '',
       points: 0,
       options: [],
@@ -18,7 +18,7 @@ class MultipleChoiceQuestionEditor extends React.Component {
       questionId: '',
       hiddenUpdateBtn: false,
       createOption: '',
-      option: '',
+      option: 'Default',
       correctOption: '',
       hiddenSaveBtn: true
 
@@ -145,6 +145,28 @@ class MultipleChoiceQuestionEditor extends React.Component {
                   <Button backgroundColor= "#2D9C98" style={styles.buttons} title="Create new Option"
                   onPress={()=>{this.createNewOption()
                   console.log("options:",this.state.options)}}/>
+                  <View style={{margin: 15}}>
+                      {/*<Text style={{fontSize: 20,marginBottom: 20,}}></Text>*/}
+                      <RadioGroup selectedIndex={this.state.correctOption} onSelect={(index)=>this.setCorrectOption(index)}>
+                          {this.state.options.map((option, index)=> (
+
+                              <RadioButton style={{flex:1, flexDirection:'row'}} key={index}>
+                                  <View style={ styles.radioEntry}>
+                                      <Text style={{fontSize: 20,marginRight: 10}}>
+                                          {option}
+                                      </Text>
+                                      <Icon
+                                          color='black'
+                                          name='times'
+                                          type='font-awesome'
+                                          onPress={() =>
+                                          {this.deleteRadioBtn(index)}}
+                                      />
+                                  </View>
+                              </RadioButton>
+                          ))}
+                      </RadioGroup>
+                  </View>
 
 
                   {this.state.hiddenSaveBtn &&
@@ -157,7 +179,7 @@ class MultipleChoiceQuestionEditor extends React.Component {
                   }
 
                   {this.state.hiddenUpdateBtn &&
-                  <Button backgroundColor="#1869AD"
+                  <Button backgroundColor="#148C0A"
                           color="white"
                           title="Edit"
                           style={styles.buttons}
@@ -189,24 +211,38 @@ class MultipleChoiceQuestionEditor extends React.Component {
                   <View style={styles.previewSection}>
 
                       <View style={styles.previewSectionHeader}>
-                          <Text style={{margin: 10, color: '#EBE8E7'}} h4>{this.state.title}</Text>
-                          <Text style={{textAlign: 'right',margin: 10, color: '#EBE8E7'}} h4>{this.state.points} pts</Text>
+                          <Text style={{margin: 10, color: '#EBE8E7', fontSize: 25}} h4>{this.state.title}</Text>
+                          <Text style={{textAlign: 'right',margin: 10, color: '#EBE8E7', fontSize: 25}} h4>{this.state.points} pts</Text>
                       </View>
                       <View style={styles.previewSectioninside}>
-                          <Text>{this.state.description}</Text>
-                          <RadioGroup selectedIndex={this.state.correctOption} onSelect={(index)=>this.setCorrectOption(index)}>
+                          <Text style={{fontSize: 20,marginBottom: 20,}}>{this.state.description}</Text>
+                          <RadioGroup>
                               {this.state.options.map((option, index)=> (
 
                                   <RadioButton style={{flex:1, flexDirection:'row'}} key={index}>
                                       <View style={ styles.radioEntry}>
-                                          <Text h4>
+                                          <Text style={{fontSize: 20, marginRight: 10}}>
                                               {option}
                                           </Text>
-                                          <Button title="Delete" onPress={()=>{this.deleteRadioBtn(index)}}/>
+                                          {/*<Button backgroundColor="#89868E"*/}
+                                                  {/*title="Delete"*/}
+                                                  {/*/!*onPress={()=>{this.deleteRadioBtn(index)}}/>*!/*/}
+                                          {/*<Icon*/}
+                                              {/*color='black'*/}
+                                              {/*name='times'*/}
+                                              {/*type='font-awesome'*/}
+                                              {/*onPress={() =>*/}
+                                              {/*{this.deleteRadioBtn(index)}}*/}
+                                          {/*/>*/}
+
                                       </View>
                                   </RadioButton>
                               ))}
                           </RadioGroup>
+                          <View style={{flex:1, flexDirection:'row', margin: 10}}>
+                              <Button backgroundColor="#89868E" title="Cancel"/>
+                              <Button backgroundColor="#89868E" title="Submit"/>
+                          </View>
                       </View>
 
                   </View>

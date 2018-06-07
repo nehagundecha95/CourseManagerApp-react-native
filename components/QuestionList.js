@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View, Alert} from 'react-native'
+import {View, Alert,ScrollView} from 'react-native'
 import {Text, ListItem} from 'react-native-elements'
 
 class QuestionList extends Component {
@@ -24,6 +24,7 @@ class QuestionList extends Component {
   }
   render() {
     return(
+        <ScrollView>
       <View style={{padding: 15}}>
       {this.state.questions.map((question, index) => (
           <ListItem
@@ -45,6 +46,7 @@ class QuestionList extends Component {
             subtitle={question.description}
             title={question.title}/>))}
       </View>
+        </ScrollView>
     )
   }
 }

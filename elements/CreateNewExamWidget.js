@@ -5,12 +5,12 @@ import {FormLabel, FormInput, FormValidationMessage} from 'react-native-elements
 import ExamService from '../services/ExamService'
 
 export default class CreateNewExamWidget extends React.Component {
-    static navigationOptions = { title: "Create new exam widget"}
+    static navigationOptions = { title: "Exam Details"}
     constructor(props) {
         super(props)
         this.state = {
             lessonId: '',
-            title: '',
+            title: 'Exam',
             description: '',
             points: '',
             hiddenUpdateBtn: false,
@@ -102,7 +102,7 @@ export default class CreateNewExamWidget extends React.Component {
                     />
                     }
                     {this.state.hiddenUpdateBtn &&
-                    <Button backgroundColor="#1869AD"
+                    <Button backgroundColor="#148C0A"
                             color="white"
                             title="Edit"
                             style={styles.buttons}

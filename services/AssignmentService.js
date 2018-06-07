@@ -17,11 +17,6 @@ export default class AssignmentService {
     }
 
     createAssignment(title,description,points, lessonId) {
-        console.log("inside service")
-        console.log("lessonid:",lessonId)
-        // console.log("assignment:",assignment);
-
-
         return fetch('http://10.0.0.138:8080/api/lesson/'+lessonId+'/assignment', {
             body: JSON.stringify({
                 title: title,
@@ -33,16 +28,11 @@ export default class AssignmentService {
             },
             method: 'POST'
         }).then(function (response) {
-            console.log("response:", response)
+            // console.log("response:", response)
             return response.json();
         })
     }
     updateAssignment(title,description,points,assignmentId) {
-        // console.log("inside update course course service ")
-        // console.log("moduleId=",moduleId)
-        // console.log("module on=object in module service :",module)
-        console.log("inside updateAssignmentservice class")
-        console.log("assignment id:",assignmentId)
         return fetch('http://10.0.0.138:8080/api/assignment/'+assignmentId+'/update',{
             method: 'put',
             body: JSON.stringify({
@@ -62,6 +52,11 @@ export default class AssignmentService {
         return fetch('http://10.0.0.138:8080/api/assignment/'+id, {
             method: 'delete'
         })
+    }
+    findAssignmentById(assignmentId){
+        return fetch("http://10.0.0.138:8080/api/assignment/" + assignmentId)
+            .then(response => (response.json()))
+
     }
 
 

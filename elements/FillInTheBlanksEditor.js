@@ -9,7 +9,7 @@ export default class FillInTheBlanksEditor extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            title: '',
+            title: 'Fill in the blanks',
             description: '',
             points: 0,
             variables: '',
@@ -33,6 +33,7 @@ export default class FillInTheBlanksEditor extends React.Component {
                     this.setState({variables: fillInTheBlanksQuestion.variables});
                     this.setState({questionId: questionId});
                     this.setState({hiddenSaveBtn: false})
+                    this.getVariablesPreview(this.state.variables);
 
                 })
         }
@@ -44,10 +45,12 @@ export default class FillInTheBlanksEditor extends React.Component {
         this.setState({
             examId: examId
         })
+
     }
-    componentWillMount(){
-        this.getVariablesPreview(this.state.variables);
-    }
+
+    // componentWillMount(){
+    //     this.getVariablesPreview(this.state.variables);
+    // }
     createNewFillInTheBlanksQuestion(){
         this.ExamService.createFillInTheBlanksQuestion(
             this.state.title,
@@ -65,7 +68,7 @@ export default class FillInTheBlanksEditor extends React.Component {
         // this.getVariablesPreview()
     }
     getVariablesPreview(text){
-        console.log("variables:", this.state.variables)
+        // console.log("variables:", this.state.variables)
         // var string = 'hbjhbhjgb[hbjhb]wjwnjk'
         var myArray = text.split(new RegExp("\\[\\w+\\=*\\w+\\]"));
         this.setState({variables: text})
@@ -118,7 +121,7 @@ export default class FillInTheBlanksEditor extends React.Component {
                     Points is required
                 </FormValidationMessage>
 
-                <FormLabel>Fill In the Blanks Variables</FormLabel>
+                <FormLabel>Fill In the Blanks Statement</FormLabel>
                 <FormInput value={this.state.variables} onChangeText={
                     text => {
                         this.updateForm({variables: text});
@@ -127,7 +130,7 @@ export default class FillInTheBlanksEditor extends React.Component {
                 }/>
 
                 <FormValidationMessage>
-                    Fill In the Blanks variables is required
+                    Fill In the Blanks Statement is required
                 </FormValidationMessage>
 
                 {this.state.hiddenSaveBtn &&
@@ -142,7 +145,7 @@ export default class FillInTheBlanksEditor extends React.Component {
                 }
 
                 {this.state.hiddenUpdateBtn &&
-                <Button backgroundColor="#1869AD"
+                <Button backgroundColor="#148C0A"
                         color="white"
                         title="Edit"
                         style={styles.buttons}
@@ -176,27 +179,35 @@ export default class FillInTheBlanksEditor extends React.Component {
                 <View style={styles.previewSection}>
 
                     <View style={styles.previewSectionHeader}>
-                        <Text style={{margin: 10, color: '#EBE8E7'}} h4>{this.state.title}</Text>
-                        <Text style={{textAlign: 'right',margin: 10, color: '#EBE8E7'}} h4>{this.state.points} pts</Text>
+                        <View>
+                            <Text style={{margin: 10, color: '#EBE8E7',fontSize: 25}} h4>{this.state.title}</Text>
+                        </View>
+                        <View>
+                        <Text style={{textAlign: 'right',margin: 10, color: '#EBE8E7',fontSize: 25}} h4>{this.state.points} pts</Text>
+                        </View>
                     </View>
                     <View style={styles.previewSectioninside}>
-                        <Text>{this.state.description}</Text>
+                        <Text style={{fontSize: 22, marginBottom: 20}}>{this.state.description}</Text>
                         <View  flexWrap={'wrap'} flexDirection={'row'}>
                         {this.state.array.map((element, index)=> {
                             if (index === (this.state.array.length - 1)) {
                                 return <View style={{flexDirection: 'row'}} flexWrap={'wrap'} key={index}>
-                                    <Text h4>
+                                    <Text style={{fontSize: 19, margin: 5}} >
                                         {element}
                                     </Text>
                                 </View>
                             }
                             return <View style={{flexDirection: 'row'}} key={index} flexWrap={'wrap'}>
-                                <Text h4>
+                                <Text style={{fontSize: 19, margin: 5}}>
                                     {element}
                                 </Text>
-                                <TextInput style={{width: 100, borderWidth: 1, borderColor: '#A19E9D'}}/>
+                                <TextInput style={{width: 100, borderWidth: 1, borderColor: '#A19E9D', margin: 5}}/>
                             </View>
                         })}
+                        </View>
+                        <View style={{flex:1, flexDirection:'row', margin: 10}}>
+                            <Button backgroundColor="#89868E" title="Cancel"/>
+                            <Button backgroundColor="#89868E" title="Submit"/>
                         </View>
                     </View>
                     {/*<Text>{this.state.variables}</Text>*/}

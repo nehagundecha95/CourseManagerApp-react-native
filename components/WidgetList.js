@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View, Alert, Picker} from 'react-native'
+import {View, Alert, Picker,ScrollView} from 'react-native'
 import {Text, ListItem, Button} from 'react-native-elements'
 // import WidgetTypePicker from "../elements/WidgetTypePicker";
 
@@ -27,7 +27,7 @@ export default class WidgetList extends Component {
 
   render() {
     return(
-
+        <ScrollView>
       <View style={{padding: 15}}>
 
           {/*list of all widgets*/}
@@ -72,6 +72,7 @@ export default class WidgetList extends Component {
 
               title = "click here"/>
 
-      </View>)
+      </View>
+        </ScrollView>)
 
   }}

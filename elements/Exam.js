@@ -67,7 +67,7 @@ export default class Exam extends Component {
                             key={index}
                             subtitle={widget.description}
                             title={widget.title}/>))}
-                    <Button style={styles.buttons}
+                    <Button style={styles.buttons} backgroundColor="#89868E"
                         onPress={() => {
                             this.props.navigation.navigate("CreateNewExamWidget", {lessonId: this.state.lessonId,refresh:this.refresh})
                         }}
