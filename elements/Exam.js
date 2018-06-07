@@ -10,6 +10,7 @@ export default class Exam extends Component {
         this.state = {
             lessonId: '',
             widgets: []
+
         }
         this.createNewExam = this.createNewExam.bind(this);
         this.ExamService = ExamService.instance;
@@ -20,10 +21,11 @@ export default class Exam extends Component {
         console.log("in refresh")
         fetch("http://10.0.0.138:8080/api/lesson/" + this.state.lessonId + "/exam")
             .then(response => (response.json()))
-            .then(widgets => (
-                // console.log("here:", widgets);
+            .then(widgets => {
+                console.log("here:", widgets);
                 this.setState({widgets: widgets})
-            ))
+                // this.setState({})
+            })
     }
     componentDidMount() {
         const {navigation} = this.props;

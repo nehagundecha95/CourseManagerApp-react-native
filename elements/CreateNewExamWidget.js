@@ -30,8 +30,6 @@ export default class CreateNewExamWidget extends React.Component {
                     this.setState({hiddenSaveBtn: false})
                 })
         }
-
-
     }
     componentDidMount() {
         // const {navigation} = this.props;

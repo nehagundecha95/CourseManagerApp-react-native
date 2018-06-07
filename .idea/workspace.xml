@@ -2,14 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0b1b80eb-1f7a-4e3b-82a9-b64349fb98a9" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/components/Assignment.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/Assignment.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/elements/AssignmentWidget.js" beforeDir="false" afterPath="$PROJECT_DIR$/elements/AssignmentWidget.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/elements/CreateNewExamWidget.js" beforeDir="false" afterPath="$PROJECT_DIR$/elements/CreateNewExamWidget.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/elements/EssayEditor.js" beforeDir="false" afterPath="$PROJECT_DIR$/elements/EssayEditor.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/elements/Exam.js" beforeDir="false" afterPath="$PROJECT_DIR$/elements/Exam.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/elements/ExamWidget.js" beforeDir="false" afterPath="$PROJECT_DIR$/elements/ExamWidget.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/elements/FillInTheBlanksEditor.js" beforeDir="false" afterPath="$PROJECT_DIR$/elements/FillInTheBlanksEditor.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/elements/MultipleChoiceQuestionEditor.js" beforeDir="false" afterPath="$PROJECT_DIR$/elements/MultipleChoiceQuestionEditor.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -86,7 +81,7 @@
       <file leaf-file-name="MultipleChoiceQuestionEditor.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/elements/MultipleChoiceQuestionEditor.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1030">
+            <state relative-caret-position="862">
               <caret line="92" column="29" lean-forward="true" selection-start-line="92" selection-start-column="29" selection-end-line="92" selection-end-column="29" />
               <folding>
                 <element signature="e#0#25#0" expanded="true" />
@@ -104,11 +99,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ExamWidget.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ExamWidget.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/elements/ExamWidget.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="129" column="27" lean-forward="true" selection-start-line="129" selection-start-column="27" selection-end-line="129" selection-end-column="27" />
+            <state relative-caret-position="280">
+              <caret line="143" column="41" lean-forward="true" selection-start-line="143" selection-start-column="41" selection-end-line="143" selection-end-column="41" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
               </folding>
@@ -119,8 +114,8 @@
       <file leaf-file-name="Exam.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/elements/Exam.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="15" column="47" lean-forward="true" selection-start-line="15" selection-start-column="8" selection-end-line="15" selection-end-column="47" />
+            <state relative-caret-position="198">
+              <caret line="64" column="53" selection-start-line="64" selection-start-column="43" selection-end-line="64" selection-end-column="53" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
               </folding>
@@ -128,11 +123,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CreateNewExamWidget.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="CreateNewExamWidget.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/elements/CreateNewExamWidget.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="409">
-              <caret line="109" column="50" lean-forward="true" selection-start-line="109" selection-start-column="50" selection-end-line="109" selection-end-column="50" />
+            <state relative-caret-position="980">
+              <caret line="110" column="99" lean-forward="true" selection-start-line="110" selection-start-column="99" selection-end-line="110" selection-end-column="99" />
               <folding>
                 <element signature="e#0#25#0" expanded="true" />
               </folding>
@@ -158,6 +153,7 @@
       <find>refre</find>
       <find>refresh</find>
       <find>refres</find>
+      <find>navigation</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/node_modules</dir>
@@ -198,8 +194,8 @@
         <option value="$PROJECT_DIR$/elements/FillInTheBlanksEditor.js" />
         <option value="$PROJECT_DIR$/components/Assignment.js" />
         <option value="$PROJECT_DIR$/elements/Exam.js" />
-        <option value="$PROJECT_DIR$/elements/ExamWidget.js" />
         <option value="$PROJECT_DIR$/elements/CreateNewExamWidget.js" />
+        <option value="$PROJECT_DIR$/elements/ExamWidget.js" />
       </list>
     </option>
   </component>
@@ -313,12 +309,12 @@
       <workItem from="1528081115305" duration="7811000" />
       <workItem from="1528124305856" duration="1910000" />
       <workItem from="1528141270756" duration="27410000" />
-      <workItem from="1528210537922" duration="61169000" />
+      <workItem from="1528210537922" duration="64288000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="153690000" />
+    <option name="totallyTimeSpent" value="156809000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1283" height="794" extended-state="0" />
@@ -725,8 +721,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/elements/MultipleChoiceQuestionEditor.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1030">
+        <state relative-caret-position="862">
           <caret line="92" column="29" lean-forward="true" selection-start-line="92" selection-start-column="29" selection-end-line="92" selection-end-column="29" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/elements/CreateNewExamWidget.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="980">
+          <caret line="110" column="99" lean-forward="true" selection-start-line="110" selection-start-column="99" selection-end-line="110" selection-end-column="99" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
           </folding>
@@ -735,8 +741,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/elements/Exam.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" column="47" lean-forward="true" selection-start-line="15" selection-start-column="8" selection-end-line="15" selection-end-column="47" />
+        <state relative-caret-position="198">
+          <caret line="64" column="53" selection-start-line="64" selection-start-column="43" selection-end-line="64" selection-end-column="53" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
           </folding>
@@ -745,20 +751,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/elements/ExamWidget.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="129" column="27" lean-forward="true" selection-start-line="129" selection-start-column="27" selection-end-line="129" selection-end-column="27" />
+        <state relative-caret-position="280">
+          <caret line="143" column="41" lean-forward="true" selection-start-line="143" selection-start-column="41" selection-end-line="143" selection-end-column="41" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/elements/CreateNewExamWidget.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="409">
-          <caret line="109" column="50" lean-forward="true" selection-start-line="109" selection-start-column="50" selection-end-line="109" selection-end-column="50" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
           </folding>
         </state>
       </provider>
