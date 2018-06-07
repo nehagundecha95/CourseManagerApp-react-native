@@ -51,12 +51,20 @@ export default class AssignmentWidget extends React.Component {
     }
 
     createNewAssignment(){
-        this.AssignmentService.createAssignment(this.state.title,this.state.description,this.state.points, this.state.lessonId);
+        this.AssignmentService.createAssignment(this.state.title,this.state.description,this.state.points, this.state.lessonId)
+            .then(response =>{
+                this.props.navigation.state.params.refresh();
+                this.props.navigation.goBack();
+            });
     }
 
     updateAssignment(){
         // console.log("in update assignment client")
-        this.AssignmentService.updateAssignment(this.state.title,this.state.description,this.state.points, this.state.assignmentId);
+        this.AssignmentService.updateAssignment(this.state.title,this.state.description,this.state.points, this.state.assignmentId)
+            .then(response =>{
+                this.props.navigation.state.params.refresh();
+                this.props.navigation.goBack();
+            });
     }
     deleteAssignment(){
         this.AssignmentService.deleteAssignment(this.state.assignmentId);

@@ -13,6 +13,17 @@ export default class Exam extends Component {
         }
         this.createNewExam = this.createNewExam.bind(this);
         this.ExamService = ExamService.instance;
+        this.refresh = this.refresh.bind(this);
+    }
+    refresh(){
+        const {navigation} = this.props;
+        console.log("in refresh")
+        fetch("http://10.0.0.138:8080/api/lesson/" + this.state.lessonId + "/exam")
+            .then(response => (response.json()))
+            .then(widgets => (
+                // console.log("here:", widgets);
+                this.setState({widgets: widgets})
+            ))
     }
     componentDidMount() {
         const {navigation} = this.props;
@@ -49,14 +60,14 @@ export default class Exam extends Component {
                         <ListItem
                             onPress={() => {
                                 {console.log("widgetId:",widget.id)}
-                                this.props.navigation.navigate("ExamWidget", {lessonId: this.state.lessonId, examId: widget.id})
+                                this.props.navigation.navigate("ExamWidget", {lessonId: this.state.lessonId,refresh:this.refresh, examId: widget.id})
                             }}
                             key={index}
                             subtitle={widget.description}
                             title={widget.title}/>))}
                     <Button style={styles.buttons}
                         onPress={() => {
-                            this.props.navigation.navigate("CreateNewExamWidget", {lessonId: this.state.lessonId})
+                            this.props.navigation.navigate("CreateNewExamWidget", {lessonId: this.state.lessonId,refresh:this.refresh})
                         }}
                         title = "Create new Exam"/>
                     }}

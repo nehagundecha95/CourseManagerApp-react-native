@@ -12,6 +12,17 @@ export default class Assignment extends React.Component {
             lessonId: '',
             widgets: []
         }
+        this.refresh = this.refresh.bind(this);
+    }
+    refresh(){
+        const {navigation} = this.props;
+        console.log("in refresh")
+        fetch("http://10.0.0.138:8080/api/lesson/" + this.state.lessonId + "/assignment")
+            .then(response => (response.json()))
+            .then(widgets => {
+                console.log("here:", widgets);
+                this.setState({widgets: widgets})
+            })
     }
 
     componentDidMount() {
@@ -46,7 +57,7 @@ export default class Assignment extends React.Component {
 
                     <ListItem
                         onPress={() => {
-                           this.props.navigation.navigate("AssignmentWidget", {assignmentId: widget.id})
+                           this.props.navigation.navigate("AssignmentWidget", {assignmentId: widget.id,refresh:this.refresh})
 
                         }}
                         key={index}
@@ -57,7 +68,7 @@ export default class Assignment extends React.Component {
 
                 <Button
                     onPress={() => {
-                        this.props.navigation.navigate("AssignmentWidget", {lessonId: this.state.lessonId})
+                        this.props.navigation.navigate("AssignmentWidget", {lessonId: this.state.lessonId,refresh:this.refresh})
                     }}
                     title="Create new Assignment"
                 style={styles.buttons}/>

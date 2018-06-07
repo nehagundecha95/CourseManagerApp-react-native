@@ -49,7 +49,10 @@ export default class EssayEditor extends React.Component {
             this.state.description,
             this.state.points,
             this.state.examId)
-            .then(console.log("created essay question"));
+            .then(response =>{
+                this.props.navigation.state.params.refresh();
+                this.props.navigation.goBack();
+            });
     }
     updateEssayQuestion(){
         console.log("update true false question");
@@ -57,7 +60,11 @@ export default class EssayEditor extends React.Component {
             this.state.title,
             this.state.description,
             this.state.points,
-            this.state.questionId);
+            this.state.questionId)
+            .then(response =>{
+                this.props.navigation.state.params.refresh();
+                this.props.navigation.goBack();
+            });
     }
     delete(){
         this.ExamService.deleteEssayQuestion(this.state.questionId);

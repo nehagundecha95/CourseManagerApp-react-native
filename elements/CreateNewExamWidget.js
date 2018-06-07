@@ -57,12 +57,20 @@ export default class CreateNewExamWidget extends React.Component {
         this.ExamService.updateExam(
             this.state.title,
             this.state.description,
-            this.state.examId);
+            this.state.examId)
+            .then(response =>{
+                this.props.navigation.state.params.refresh();
+                this.props.navigation.goBack();
+            });
     }
 
 
     createNewExam(){
-        this.ExamService.createExam(this.state.title, this.state.description, this.state.lessonId);
+        this.ExamService.createExam(this.state.title, this.state.description, this.state.lessonId)
+            .then(response =>{
+                this.props.navigation.state.params.refresh();
+                this.props.navigation.goBack();
+            });
     }
     render() {
         return(

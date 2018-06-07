@@ -9,7 +9,7 @@ export default class ExamWidget extends Component {
         super(props)
         this.state = {
             questions: [],
-            questionType: '',
+            questionType: 'MultipleChoice',
             examId: '',
             lessonId: ''
         }
@@ -56,6 +56,7 @@ export default class ExamWidget extends Component {
             })
     }
 
+
     temp(){
         {console.log("examId:",this.state.questions)}
     }
@@ -82,13 +83,13 @@ export default class ExamWidget extends Component {
                                     .navigate("TrueFalseQuestionEditor",{questionId: question.id,refresh:this.refresh})
                             if(question.type === "MultipleChoice")
                                 this.props.navigation
-                                    .navigate("MultipleChoiceQuestionEditor", {questionId: question.id})
+                                    .navigate("MultipleChoiceQuestionEditor", {questionId: question.id,refresh:this.refresh})
                             if(question.type === "Essay")
                                 this.props.navigation
-                                    .navigate("EssayEditor", {questionId: question.id})
+                                    .navigate("EssayEditor", {questionId: question.id,refresh:this.refresh})
                             if(question.type === "FillInTheBlanks")
                                 this.props.navigation
-                                    .navigate("FillInTheBlanksEditor", {questionId: question.id})
+                                    .navigate("FillInTheBlanksEditor", {questionId: question.id,refresh:this.refresh})
                         }}
                         key={index}
                         subtitle={question.description}
@@ -114,13 +115,13 @@ export default class ExamWidget extends Component {
                                 .navigate("TrueFalseQuestionEditor",{examId: this.state.examId,refresh:this.refresh})
                         if(this.state.questionType === "MultipleChoice")
                             this.props.navigation
-                                .navigate("MultipleChoiceQuestionEditor", {examId: this.state.examId})
+                                .navigate("MultipleChoiceQuestionEditor", {examId: this.state.examId,refresh:this.refresh})
                         if(this.state.questionType === "Essay")
                             this.props.navigation
-                                .navigate("EssayEditor", {examId: this.state.examId})
+                                .navigate("EssayEditor", {examId: this.state.examId,refresh:this.refresh})
                         if(this.state.questionType === "FillInTheBlanks")
                             this.props.navigation
-                                .navigate("FillInTheBlanksEditor", {examId: this.state.examId})
+                                .navigate("FillInTheBlanksEditor", {examId: this.state.examId,refresh:this.refresh})
                     }}
                     title = "Create new Question"/>
                     }}
@@ -133,7 +134,7 @@ export default class ExamWidget extends Component {
                             style={styles.examButton}
                             onPress={() => {
                                 this.updateExam();
-                                this.props.navigation.navigate("CreateNewExamWidget", {examId: this.state.examId},{lessonId: this.state.lessonId})
+                                this.props.navigation.navigate("CreateNewExamWidget", {examId: this.state.examId,refresh:this.refresh,lessonId: this.state.lessonId})
                             }}/>
 
 

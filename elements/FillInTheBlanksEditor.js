@@ -18,7 +18,8 @@ export default class FillInTheBlanksEditor extends React.Component {
             questionId: '',
             showPreview: false,
             array: [],
-            hiddenSaveBtn: true
+            hiddenSaveBtn: true,
+
         }
         if(this.props.navigation.getParam("questionId")!==undefined){
             const questionId = this.props.navigation.getParam("questionId");
@@ -54,7 +55,10 @@ export default class FillInTheBlanksEditor extends React.Component {
             this.state.points,
             this.state.variables,
             this.state.examId)
-            .then(console.log("created fill in the blanks question"));
+            .then(response =>{
+                this.props.navigation.state.params.refresh();
+                this.props.navigation.goBack();
+            });
     }
     updateForm(newState) {
         this.setState(newState)
@@ -76,7 +80,11 @@ export default class FillInTheBlanksEditor extends React.Component {
             this.state.description,
             this.state.points,
             this.state.variables,
-            this.state.questionId);
+            this.state.questionId)
+            .then(response =>{
+                this.props.navigation.state.params.refresh();
+                this.props.navigation.goBack();
+            });
     }
     delete(){
         this.ExamService.deleteFillInTheBlanksQuestion(this.state.questionId);

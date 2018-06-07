@@ -62,7 +62,10 @@ class MultipleChoiceQuestionEditor extends React.Component {
             this.state.options,
             this.state.correctOption,
             this.state.examId)
-            .then(console.log("created multiple choice question"));
+            .then(response =>{
+                this.props.navigation.state.params.refresh();
+                this.props.navigation.goBack();
+            });
   }
   createNewOption(){
       var temp = this.state.options
@@ -92,7 +95,11 @@ class MultipleChoiceQuestionEditor extends React.Component {
             this.state.points,
             this.state.options,
             this.state.correctOption,
-            this.state.questionId);
+            this.state.questionId)
+            .then(response =>{
+                this.props.navigation.state.params.refresh();
+                this.props.navigation.goBack();
+            });
     }
     delete(){
         this.ExamService.deleteMultipleChoiceQuestion(this.state.questionId);
