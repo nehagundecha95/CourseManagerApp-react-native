@@ -20,7 +20,7 @@ export default class CreateNewExamWidget extends React.Component {
         this.ExamService = ExamService.instance;
         if(this.props.navigation.getParam("examId")!==undefined){
             const examId = this.props.navigation.getParam("examId");
-            fetch("http://10.0.0.138:8080/api/exam/"+examId)
+            fetch("http://localhost:8080/api/exam/"+examId)
                 .then(response => (response.json()))
                 .then(exam => {
                     this.setState({hiddenUpdateBtn: true});

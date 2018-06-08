@@ -22,7 +22,7 @@ export default class AssignmentWidget extends React.Component {
 
         if(this.props.navigation.getParam("assignmentId")!==undefined){
             assignmentId = this.props.navigation.getParam("assignmentId");
-            fetch("http://10.0.0.138:8080/api/assignment/" + assignmentId)
+            fetch("http://localhost:8080/api/assignment/" + assignmentId)
                 .then(response => (response.json()))
                 .then(assignment => {
                     this.setState({hiddenUpdateBtn: true})

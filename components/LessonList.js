@@ -21,7 +21,7 @@ class LessonList extends Component {
         courseId: courseId,
         moduleId: moduleId
     });
-    fetch('http://10.0.0.138:8080/api/course/'+courseId+'/module/'+moduleId+'/lesson')
+    fetch('http://localhost:8080/api/course/'+courseId+'/module/'+moduleId+'/lesson')
       .then(response => (response.json()))
       .then(lessons => this.setState({lessons: lessons}))
   }

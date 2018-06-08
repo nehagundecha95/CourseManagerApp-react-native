@@ -20,7 +20,7 @@ export default class WidgetList extends Component {
       this.setState({
           lessonId: lessonId
       })
-    fetch("http://10.0.0.138:8080/api/lesson/"+lessonId+"/widget")
+    fetch("http://localhost:8080/api/lesson/"+lessonId+"/widget")
       .then(response => (response.json()))
       .then(widgets => {console.log("here:",widgets);this.setState({widgets: widgets})})
   }

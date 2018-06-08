@@ -21,7 +21,7 @@ class TrueFalseQuestionEditor extends React.Component {
     }
       if(this.props.navigation.getParam("questionId")!==undefined){
           const questionId = this.props.navigation.getParam("questionId");
-          fetch("http://10.0.0.138:8080/api/truefalse/"+questionId)
+          fetch("http://localhost:8080/api/truefalse/"+questionId)
               .then(response => (response.json()))
               .then(trueFalseQuestion => {
                   this.setState({hiddenUpdateBtn: true});

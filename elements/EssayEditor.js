@@ -20,7 +20,7 @@ export default class EssayEditor extends React.Component {
         }
         if(this.props.navigation.getParam("questionId")!==undefined){
             const questionId = this.props.navigation.getParam("questionId");
-            fetch("http://10.0.0.138:8080/api/essay/"+questionId)
+            fetch("http://localhost:8080/api/essay/"+questionId)
                 .then(response => (response.json()))
                 .then(essayQuestion => {
                     this.setState({hiddenUpdateBtn: true});

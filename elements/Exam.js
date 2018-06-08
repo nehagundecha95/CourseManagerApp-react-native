@@ -19,7 +19,7 @@ export default class Exam extends Component {
     refresh(){
         const {navigation} = this.props;
         console.log("in refresh")
-        fetch("http://10.0.0.138:8080/api/lesson/" + this.state.lessonId + "/exam")
+        fetch("http://localhost:8080/api/lesson/" + this.state.lessonId + "/exam")
             .then(response => (response.json()))
             .then(widgets => {
                 console.log("here:", widgets);
@@ -33,7 +33,7 @@ export default class Exam extends Component {
         this.setState({
             lessonId: lessonId
         })
-        fetch("http://10.0.0.138:8080/api/lesson/" + lessonId + "/exam")
+        fetch("http://localhost:8080/api/lesson/" + lessonId + "/exam")
             .then(response => (response.json()))
             .then(widgets => (
                 // console.log("here:", widgets);
@@ -42,7 +42,7 @@ export default class Exam extends Component {
     }
     componentWillReceiveProps(){
         console.log("lessonId in exam after receving props:", this.state.lessonId)
-        fetch("http://10.0.0.138:8080/api/lesson/" + this.state.lessonId + "/exam")
+        fetch("http://localhost:8080/api/lesson/" + this.state.lessonId + "/exam")
             .then(response => (response.json()))
             .then(widgets => {
                 console.log("here:", widgets);

@@ -18,7 +18,7 @@ class QuestionList extends Component {
           examId: examId
       })
 
-    fetch("http://10.0.0.138:8080/api/exam/"+examId+"/question")
+    fetch("http://localhost:8080/api/exam/"+examId+"/question")
       .then(response => (response.json()))
       .then(questions => this.setState({questions: questions}))
   }

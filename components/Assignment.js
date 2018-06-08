@@ -17,7 +17,7 @@ export default class Assignment extends React.Component {
     refresh(){
         const {navigation} = this.props;
         console.log("in refresh")
-        fetch("http://10.0.0.138:8080/api/lesson/" + this.state.lessonId + "/assignment")
+        fetch("http://localhost:8080/api/lesson/" + this.state.lessonId + "/assignment")
             .then(response => (response.json()))
             .then(widgets => {
                 console.log("here:", widgets);
@@ -31,7 +31,7 @@ export default class Assignment extends React.Component {
         this.setState({
             lessonId: lessonId
         })
-        fetch("http://10.0.0.138:8080/api/lesson/" + lessonId + "/assignment")
+        fetch("http://localhost:8080/api/lesson/" + lessonId + "/assignment")
             .then(response => (response.json()))
             .then(widgets => {
                 console.log("here:", widgets);
@@ -39,7 +39,7 @@ export default class Assignment extends React.Component {
             })
     }
     componentWillReceiveProps(){
-        fetch("http://10.0.0.138:8080/api/lesson/" + this.state.lessonId + "/assignment")
+        fetch("http://localhost:8080/api/lesson/" + this.state.lessonId + "/assignment")
             .then(response => (response.json()))
             .then(widgets => {
                 console.log("here:", widgets);

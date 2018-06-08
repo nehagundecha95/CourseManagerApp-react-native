@@ -21,7 +21,7 @@ export default class ExamWidget extends Component {
     refresh(){
         const {navigation} = this.props;
         console.log("in refresh")
-        fetch("http://10.0.0.138:8080/api/exam/" + this.state.examId + "/question")
+        fetch("http://localhost:8080/api/exam/" + this.state.examId + "/question")
             .then(response => (response.json()))
             .then(questions => {
                 console.log("here:", questions);
@@ -32,7 +32,7 @@ export default class ExamWidget extends Component {
     refresh2(){
         const {navigation} = this.props;
         console.log("in refresh")
-        fetch("http://10.0.0.138:8080/api/lesson/" + this.state.lessonId + "/exam")
+        fetch("http://localhost:8080/api/lesson/" + this.state.lessonId + "/exam")
             .then(response => (response.json()))
             .then(widgets => {
                 console.log("here:", widgets);
@@ -50,7 +50,7 @@ export default class ExamWidget extends Component {
         this.setState({
             lessonId: lessonId
         })
-        fetch("http://10.0.0.138:8080/api/exam/" + examId + "/question")
+        fetch("http://localhost:8080/api/exam/" + examId + "/question")
             .then(response => (response.json()))
             .then(questions => {
                 // console.log("here:", widgets);
@@ -59,7 +59,7 @@ export default class ExamWidget extends Component {
             })
     }
     componentWillReceiveProps(){
-        fetch("http://10.0.0.138:8080/api/exam/" + this.state.examId + "/question")
+        fetch("http://localhost:8080/api/exam/" + this.state.examId + "/question")
             .then(response => (response.json()))
             .then(questions => {
                 console.log("here:", questions);
