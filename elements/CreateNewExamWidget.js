@@ -95,6 +95,7 @@ export default class CreateNewExamWidget extends React.Component {
                             color="white"
                             title="Save"
                             onPress={() => {
+                                Alert.alert('Created new Exam');
                                 this.createNewExam()
                                 console.log("lessonID in create new exam widget:", this.state.lessonId);
                                 this.props.navigation.navigate("Exam", {lessonId: this.state.lessonId})
@@ -107,6 +108,7 @@ export default class CreateNewExamWidget extends React.Component {
                             title="Edit"
                             style={styles.buttons}
                             onPress={() => {
+                                Alert.alert('Updated exam');
                                 this.updateExam();
                                 this.props.navigation.navigate("ExamWidget", {examId: this.state.examId})
                             }}/>

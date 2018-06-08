@@ -34,7 +34,7 @@ class Home extends React.Component {
                 {/*<AssignmentWidget navigation={this.props.navigation}/>*/}
 
                 {/*<FillInTheBlanksEditor/>*/}
-                <StatusBar barStyle="light-content"/>
+                <StatusBar/>
                 <FixedHeader/>
 
                 <Button style={styles.buttons} title="Courses" backgroundColor="#89868E"

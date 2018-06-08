@@ -1,12 +1,12 @@
 import React from 'react'
-import {StyleSheet, View, ScrollView} from 'react-native'
+import {StyleSheet, View, ScrollView, Alert} from 'react-native'
 import {Text, Button, CheckBox, ListItem, Icon} from 'react-native-elements'
 import {FormLabel, FormInput, FormValidationMessage} from 'react-native-elements'
 import ExamService from "../services/ExamService";
 import {RadioGroup, RadioButton} from 'react-native-flexi-radio-button'
 
 class MultipleChoiceQuestionEditor extends React.Component {
-  static navigationOptions = { title: "Multiple Choice"}
+  static navigationOptions = { title: "Multiple Choice Question"}
   constructor(props) {
     super(props)
     this.state = {
@@ -151,7 +151,7 @@ class MultipleChoiceQuestionEditor extends React.Component {
                           {this.state.options.map((option, index)=> (
 
                               <RadioButton style={{flex:1, flexDirection:'row'}} key={index}>
-                                  <View style={ styles.radioEntry}>
+                                  <View style={ styles.radioEntry} flexWrap={'wrap'}>
                                       <Text style={{fontSize: 20,marginRight: 10}}>
                                           {option}
                                       </Text>
@@ -174,7 +174,9 @@ class MultipleChoiceQuestionEditor extends React.Component {
                       color="white"
                       title="Save"
                       style={styles.buttons}
-                      onPress={()=>{this.createNewMultipleChoiceQuestion();
+                      onPress={()=>{
+                          Alert.alert('Created new multiple choice question');
+                          this.createNewMultipleChoiceQuestion();
                       this.props.navigation.navigate("ExamWidget",{examId: this.state.questionId})}}/>
                   }
 
@@ -184,6 +186,7 @@ class MultipleChoiceQuestionEditor extends React.Component {
                           title="Edit"
                           style={styles.buttons}
                           onPress={() => {
+                              Alert.alert('Updated multiple choice question');
                               this.updateMultiChoiceQuestionQuestion();
                               this.props.navigation.navigate("ExamWidget", {examId: this.state.questionId})
                           }}/>
@@ -194,8 +197,17 @@ class MultipleChoiceQuestionEditor extends React.Component {
                           color="white"
                           title="Delete"
                           onPress={() => {
-                              this.delete();
-                              this.props.navigation.navigate("ExamWidget", {examId: this.state.examId})
+                              Alert.alert(
+                                  'Delete',
+                                  'Are you sure you want to delete this question?',
+                                  [
+                                      {text: 'Yes', onPress: () => {this.delete();
+                                              this.props.navigation.navigate("ExamWidget", {examId: this.state.examId})}},
+                                      {text: 'Cancel', onPress: () => console.log('Cancel'), style: 'cancel'},
+                                  ],
+                                  { cancelable: false }
+                              )
+
                           }}/>
                   }
 
@@ -210,9 +222,9 @@ class MultipleChoiceQuestionEditor extends React.Component {
                 <Text style={styles.previewHeader} h3>Preview</Text>
                   <View style={styles.previewSection}>
 
-                      <View style={styles.previewSectionHeader}>
-                          <Text style={{margin: 10, color: '#EBE8E7', fontSize: 25}} h4>{this.state.title}</Text>
-                          <Text style={{textAlign: 'right',margin: 10, color: '#EBE8E7', fontSize: 25}} h4>{this.state.points} pts</Text>
+                      <View flexWrap={'wrap'} style={styles.previewSectionHeader}>
+                          <Text  style={{margin: 10, color: '#EBE8E7', fontSize: 25}}>{this.state.title}</Text>
+                          <Text  style={{textAlign: 'right',margin: 10, color: '#EBE8E7', fontSize: 25}}>{this.state.points} pts</Text>
                       </View>
                       <View style={styles.previewSectioninside}>
                           <Text style={{fontSize: 20,marginBottom: 20,}}>{this.state.description}</Text>

@@ -149,8 +149,18 @@ export default class ExamWidget extends Component {
                                 color="white"
                                 title="Delete exam"
                                 onPress={() => {
-                                    this.deleteExam();
-                                    this.props.navigation.navigate("Exam", {lessonId: this.state.lessonId})
+                                    Alert.alert(
+                                        'Delete',
+                                        'Are you sure you want to delete this exam?',
+                                        [
+                                            {text: 'Yes', onPress: () => {this.deleteExam();
+                                                    this.props.navigation.navigate("Exam", {lessonId: this.state.lessonId})}},
+                                            {text: 'Cancel', onPress: () => console.log('Cancel'), style: 'cancel'},
+                                        ],
+                                        { cancelable: false }
+                                    )
+
+
                                 }}/>
                     </View>
                 </View>

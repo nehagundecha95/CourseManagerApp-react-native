@@ -6,14 +6,14 @@ import AssignmentService from '../services/AssignmentService'
 
 var assignmentId = 0
 export default class AssignmentWidget extends React.Component {
-    static navigationOptions = { title: "Create new Assignment"}
+    static navigationOptions = { title: "Assignment Widget"}
     constructor(props) {
         super(props)
         this.state = {
             lessonId: '',
             title: 'Assignment',
             description: '',
-            points: '',
+            points: 0,
             widgets: [],
             assignmentId: '',
             hiddenUpdateBtn: false,
@@ -110,6 +110,7 @@ export default class AssignmentWidget extends React.Component {
                                 color="white"
                                 title="Save"
                                 onPress={() => {
+                                    Alert.alert('Created new assignment');
                                     this.createNewAssignment();
                                     this.props.navigation.navigate("Assignment", {lessonId: this.state.lessonId})
                                 }}
@@ -122,6 +123,7 @@ export default class AssignmentWidget extends React.Component {
                                     color="white"
                                     title="Edit"
                                     onPress={() => {
+                                        Alert.alert('Updated assignment');
                                         this.updateAssignment();
                                         this.props.navigation
                                             .navigate("Assignment", {lessonId: this.state.lessonId})
@@ -132,9 +134,19 @@ export default class AssignmentWidget extends React.Component {
                             color="white"
                             title="Delete"
                             onPress={() => {
-                                this.deleteAssignment();
-                                this.props.navigation
-                                    .navigate("Assignment", {lessonId: this.state.lessonId})
+                                Alert.alert(
+                                    'Delete',
+                                    'Are you sure you want to delete this question?',
+                                    [
+                                        {text: 'Yes', onPress: () => {this.deleteAssignment();
+                                                                    this.props.navigation
+                                                                        .navigate("Assignment", {lessonId: this.state.lessonId})}},
+                                        {text: 'Cancel', onPress: () => console.log('Cancel'), style: 'cancel'},
+                                    ],
+                                    { cancelable: false }
+                                )
+
+
                             }}/>
                     }
 
@@ -146,7 +158,7 @@ export default class AssignmentWidget extends React.Component {
 
                     <Text style={styles.previewHeader} h4>Preview</Text>
                     <View style={styles.previewSection}>
-                        <View style={styles.previewSectionHeader}>
+                        <View flexWrap={'wrap'} style={styles.previewSectionHeader}>
                             <Text style={{margin: 10, color: '#EBE8E7',fontSize: 25}} h4>{this.state.title}</Text>
                             <Text style={{textAlign: 'right',margin: 10, color: '#EBE8E7',fontSize: 25}} h4>{this.state.points} pts</Text>
                         </View>

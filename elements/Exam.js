@@ -4,7 +4,7 @@ import {Text, ListItem, ButtonGroup, Button} from 'react-native-elements'
 import ExamService from "../services/ExamService";
 
 export default class Exam extends Component {
-    static navigationOptions = {title: 'Exam '}
+    static navigationOptions = {title: 'Exam'}
     constructor(props) {
         super(props)
         this.state = {

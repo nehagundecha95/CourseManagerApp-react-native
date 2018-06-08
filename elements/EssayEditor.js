@@ -1,11 +1,11 @@
 import React from 'react'
-import {StyleSheet, View, TextInput,ScrollView} from 'react-native'
+import {StyleSheet, View, TextInput, ScrollView, Alert} from 'react-native'
 import {Text, Button} from 'react-native-elements'
 import {FormLabel, FormInput, FormValidationMessage} from 'react-native-elements'
 import ExamService from "../services/ExamService";
 
 export default class EssayEditor extends React.Component {
-    static navigationOptions = { title: "Essay"}
+    static navigationOptions = { title: "Essay Question"}
     constructor(props) {
         super(props)
         this.state = {
@@ -103,6 +103,7 @@ export default class EssayEditor extends React.Component {
                         title="Save"
                         style={styles.buttons}
                         onPress={() => {
+                            Alert.alert('Created new essay question');
                             this.createNewEssayQuestion();
                             this.props.navigation.navigate("ExamWidget", {examId: this.state.questionId})
                         }}/>
@@ -114,6 +115,7 @@ export default class EssayEditor extends React.Component {
                         title="Edit"
                         style={styles.buttons}
                         onPress={() => {
+                            Alert.alert('Updated essay question');
                             this.updateEssayQuestion();
                             this.props.navigation.navigate("ExamWidget", {examId: this.state.questionId})
                         }}/>
@@ -123,8 +125,17 @@ export default class EssayEditor extends React.Component {
                         color="white"
                         title="Delete"
                         onPress={() => {
-                            this.delete();
-                            this.props.navigation.navigate("ExamWidget", {examId: this.state.examId})
+                            Alert.alert(
+                                'Delete',
+                                'Are you sure you want to delete this question?',
+                                [
+                                    {text: 'Yes', onPress: () => {this.delete();
+                                            this.props.navigation.navigate("ExamWidget", {examId: this.state.examId})}},
+                                    {text: 'Cancel', onPress: () => console.log('Cancel'), style: 'cancel'},
+                                ],
+                                { cancelable: false }
+                            )
+
                         }}/>
                 }
 
@@ -144,7 +155,7 @@ export default class EssayEditor extends React.Component {
 
                 <View style={styles.previewSection}>
 
-                    <View style={styles.previewSectionHeader}>
+                    <View flexWrap={'wrap'} style={styles.previewSectionHeader}>
                         <Text style={{margin: 10, color: '#EBE8E7',fontSize: 25}} h4>{this.state.title}</Text>
                         <Text style={{textAlign: 'right',margin: 10, color: '#EBE8E7',fontSize: 25}} h4>{this.state.points} pts</Text>
                     </View>

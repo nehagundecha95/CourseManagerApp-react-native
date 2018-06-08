@@ -1,11 +1,11 @@
 import React from 'react'
-import {View, StyleSheet,ScrollView} from 'react-native'
+import {View, StyleSheet, ScrollView, Alert} from 'react-native'
 import {Text, Button, CheckBox} from 'react-native-elements'
 import {FormLabel, FormInput, FormValidationMessage} from 'react-native-elements'
 import ExamService from "../services/ExamService";
 
 class TrueFalseQuestionEditor extends React.Component {
-  static navigationOptions = { title: "True False"}
+  static navigationOptions = { title: "True False Question"}
   constructor(props) {
     super(props)
     this.state = {
@@ -123,6 +123,7 @@ class TrueFalseQuestionEditor extends React.Component {
                   title="Save"
                   style={styles.buttons}
                   onPress={() => {
+                      Alert.alert('Created new true false question');
                       this.createNewTrueFalseQuestion();
                       this.props.navigation.navigate("ExamWidget", {examId: this.state.examId})
                   }}/>
@@ -134,6 +135,7 @@ class TrueFalseQuestionEditor extends React.Component {
                   title="Edit"
                   style={styles.buttons}
                   onPress={() => {
+                      Alert.alert('Updated true false question');
                       this.updateTrueFalseQuestion();
                       this.props.navigation.navigate("ExamWidget", {examId: this.state.examId})
                   }}/>
@@ -143,8 +145,18 @@ class TrueFalseQuestionEditor extends React.Component {
                   color="white"
                   title="Delete"
                   onPress={() => {
-                      this.delete();
-                      this.props.navigation.navigate("ExamWidget", {examId: this.state.examId})
+                      Alert.alert(
+                          'Delete',
+                          'Are you sure you want to delete this question?',
+                          [
+                              {text: 'Yes', onPress: () => {this.delete();
+                                      this.props.navigation.navigate("ExamWidget", {examId: this.state.examId})}},
+                              {text: 'Cancel', onPress: () => console.log('Cancel'), style: 'cancel'},
+                          ],
+                          { cancelable: false }
+                      )
+
+
                   }}/>
           }
 
@@ -162,7 +174,7 @@ class TrueFalseQuestionEditor extends React.Component {
 
           <View style={styles.previewSection}>
 
-              <View style={styles.previewSectionHeader}>
+              <View flexWrap={'wrap'} style={styles.previewSectionHeader}>
                   <Text style={{margin: 10, color: '#EBE8E7',fontSize: 25}} h4>{this.state.title}</Text>
                   <Text style={{textAlign: 'right',margin: 10, color: '#EBE8E7',fontSize: 25}} h4>{this.state.points} pts</Text>
               </View>

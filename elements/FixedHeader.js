@@ -3,7 +3,8 @@ import {Header} from 'react-native-elements'
 
 const FixedHeader = () => (
   <Header
-    leftComponent={{ 		icon: 'menu', color: '#fff' }}
+    outerContainerStyles={{ backgroundColor: 'black'}}
+    leftComponent={{icon: 'menu', color: '#fff' }}
     centerComponent={{	text: 'Course Manager',
       style: { color: '#fff' , fontSize: 20} }}
     rightComponent={{ icon: 'home', color: '#fff' }}/>

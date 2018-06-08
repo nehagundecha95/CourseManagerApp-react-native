@@ -4,7 +4,7 @@ import {Text, ListItem, Button} from 'react-native-elements'
 // import WidgetTypePicker from "../elements/WidgetTypePicker";
 
 export default class Widget extends Component {
-    static navigationOptions = {title: 'Widget Type'}
+    static navigationOptions = {title: 'Widget Types'}
     constructor(props) {
         super(props)
         this.state = {
